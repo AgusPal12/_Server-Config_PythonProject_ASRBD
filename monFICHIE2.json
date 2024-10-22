@@ -1,0 +1,8 @@
+{
+    "name": "Serveur2",
+    "ip": "IP",
+    "Systeme": "OS",
+    "Services UP": [
+        "php, mysql"
+    ]
+}
