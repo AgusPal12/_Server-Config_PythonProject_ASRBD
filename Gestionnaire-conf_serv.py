@@ -1,13 +1,24 @@
 import os
 import json
 import pprint
+import nmap
 
+dir_path = '.' #variable pour stocker le repertoire où la ligne suivante va chercher les fichier .json
+json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #la function os.listdir(dir_path) retourne les fichier et repertoires qui sont dans le repertoire (dir_path)...."f for f in..." est un boucle qui va itérer dans la liste doné par os.listdir(dir_path)....if f.endswith('.json') c'est un conditional qui filtre la liste avec les fichier qui se terminent par .json
+
+
+server_config = """
+
+░█▀▀░█▀▀░█▀▄░█░█░█▀▀░█▀▄░░░█▀▀░█▀█░█▀█░█▀▀░▀█▀░█▀▀
+░▀▀█░█▀▀░█▀▄░▀▄▀░█▀▀░█▀▄░░░█░░░█░█░█░█░█▀▀░░█░░█░█
+░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░▀░░░▀▀▀░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀
+"""
 Selection = """
 ---------Menu---------------
 1. Ajouter une configuration 
 2. Modifier une configuration 
-3. Supprimer une configuration 
-4. Lister les configurations 
+3. Lister les configurations 
+4. Supprimer une configuration
 5. Sauvegarder les configurations 
 6. Restaurer les configurations 
 7.Découverte de Services et de Serveurs 
@@ -17,8 +28,10 @@ selection_5 = """
 -------Option-De-Sauvegarde--------------------------
 1. Sauvegarder le nouveau Serveur
 2. Sauvegarder les modifications du serveur existant
+3. Revenir au Menu 
 -----------------------------------------------------
 """
+print(server_config)
 print(Selection)
 
 while True: #Va créer la boucle, pour revenir toujours sélectionner une option valide.
@@ -29,6 +42,8 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
         print("Entrez un option de 1 au 7 svp")
         continue
 
+    
+    
     if option == 1:
         
         nom_ser = input("Entrez le nom du serveur : ") #enregistre le nom du serveur dans la variable nom_ser
@@ -43,12 +58,15 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
         print("")
         print("Configuration ajoutée avec succès, oubliez pas de la sauvegarder avant d'ajouter une autre configuration!") #Une fois tous les paramètres ajoutée (faut qu'il le garde en mémoire pour qu'apres avec l'option 5 la config reste et si exit, demander si sauvegarde), idée: creer un deuxieme fichier json genre server_config_tmp)
         print(Selection)
+    
+    
+    
+    
     elif option == 2:
         print("") #pour faire de l'espace(chercher comment faire plus propre)
         print("Liste des fichiers de configuration")
         print("")
-        dir_path = '.' #variable pour stocker le repertoire où la ligne suivante va chercher les fichier .json
-        json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #la function os.listdir(dir_path) retourne les fichier et repertoires qui sont dans le repertoire (dir_path)...."f for f in..." est un boucle qui va itérer dans la liste doné par os.listdir(dir_path)....if f.endswith('.json') c'est un conditional qui filtre la liste avec les fichier qui se terminent par .json
+        
         for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
             print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de 
         
@@ -102,14 +120,59 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
             
 
     elif option == 3:
-        print("En cour d'integration, voulez ressayer une autre option")
+        json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient d'effacer un fichier la function pour lister ne trouve pas le fichier. 
+        print("")
+        print("")
+        print("Voici tous les configurations des serveurs")
+        for file in json_files:
+            with open(os.path.join(dir_path, file), 'r') as f:
+                data = json.load(f)
+                print("")
+                print("----------------------")
+                print("")
+                print(file)
+                print("")
+                for key, value in data.items(): #fait une boucle pour et passe par item de "data"
+                    print(f"{key}: {value}")
+        print("")
+        print("")
+        print(Selection)
+        
         
     
+    
+    
     elif option == 4:
-        print("En cour d'integration, voulez ressayer une autre option")
+        print("-------------------")
+        print("Liste des fichiers")
+        print("")
         
+        for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
+            print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de 
+        
+        print("")
+        serv_asup = int(input("Choisir le numéro fichier de configuration qui vous voulez supprimer: "))
+        print("")
+        print("")
+        print("-------------------------------")
+        serv_asup -= 1 #l’opérateur -= soustrait (dans ce cas 1) x quantité d'elements dans la liste indexée. Important plus tard quand il va afficher la liste de fichier dans le dossier de manière qu'il commence par 1
+        confirmation = input(f"Nom du fichier: {os.path.basename(json_files[serv_asup])} à supprimer, Voulez vous supprimer le fichier o/n: ") #imprime le nom du fichier, pour ça utilise la fonctionnalité os.path.basename dans le fichier choisi
+        while True:
+            if confirmation == "o":
+                os.remove(json_files[serv_asup])
+                print("Fichier supprimé avec succès")
+                break
+            elif confirmation == "n":
+                print("Fichier pas supprimé")
+                break
+        print(Selection)
+    
+    
+    
+    
+    
     elif option == 5:
-
+        
         print(selection_5)
         print("")
 
@@ -130,23 +193,35 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
                 #print("En cour d'integration, voulez ressayer une autre option")
                 
                 print("Fichier sauvegardé avec succès!")
-                print(Selection)
+                print(selection_5)
 
             elif option_5 == 2:
-                with open(json_files[serv_amod], 'w') as f:
-                    json.dump(data_mod, f, indent=4)
+                with open(json_files[serv_amod], 'w') as f: #Prends le fichier sélectionné par l'utilisateur en option 2, le met dans Write mode et le met dans la variable f
+                    json.dump(data_mod, f, indent=4) #prends la variable mod8data crée dans l'option 2 avec les modifications faites et le met dans le fichier dans le fichier avec le forma correct.
                 print("Fichier sauvegardé avec succès!")
+                print("")
+                print(selection_5)
+            
+            elif option_5 == 3:
+                break
 
             else:
-                print("Entrez soit 1, soit2 ")
+                print("Entrez soit 1, soit 2, soit 3")
 
-                
+            
+        print(Selection)
 
 
-
+    
+    
+    
     elif option == 6:
         print("En cour d'integration, voulez ressayer une autre option")
         
+    
+    
+    
+    
     elif option == 7:
         print("En cour d'integration, voulez ressayer une autre option")
         
