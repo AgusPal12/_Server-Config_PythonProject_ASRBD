@@ -14,15 +14,86 @@ server_config = """
 ░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░▀░░░▀▀▀░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀
 """
 Selection = """
----------Menu---------------
+
+          ╔╦╗┌─┐┌┐┌┬ ┬         
+--------  ║║║├┤ ││││ │  ---------   
+          ╩ ╩└─┘┘└┘└─┘        
 1. Ajouter une configuration 
 2. Modifier une configuration 
 3. Lister les configurations 
 4. Supprimer une configuration
 5. Sauvegarder les configurations 
 6. Restaurer les configurations 
-7.Découverte de Services et de Serveurs 
+7. Scanner les serveurs (NMAP) 
+---------------------------------
 """
+fichier_conf = """
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+╔╗╔┌─┐┬ ┬┬  ┬┌─┐┌─┐┬ ┬  ╔═╗┬┌─┐┬ ┬┬┌─┐┬─┐  ╔═╗╔═╗╔╗╔╔═╗
+║║║│ ││ │└┐┌┘├┤ ├─┤│ │  ╠╣ ││  ├─┤│├┤ ├┬┘  ║  ║ ║║║║╠╣ 
+╝╚╝└─┘└─┘ └┘ └─┘┴ ┴└─┘  ╚  ┴└─┘┴ ┴┴└─┘┴└─  ╚═╝╚═╝╝╚╝╚      
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
+
+modifier_une_conf = """
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+╔╦╗┌─┐┌┬┐┬┌─┐┬┌─┐┬─┐  ┬ ┬┌┐┌  ╔═╗┬┌─┐┬ ┬┬┌─┐┬─┐  ╔═╗╔═╗╔╗╔╔═╗
+║║║│ │ │││├┤ │├┤ ├┬┘  │ ││││  ╠╣ ││  ├─┤│├┤ ├┬┘  ║  ║ ║║║║╠╣ 
+╩ ╩└─┘─┴┘┴└  ┴└─┘┴└─  └─┘┘└┘  ╚  ┴└─┘┴ ┴┴└─┘┴└─  ╚═╝╚═╝╝╚╝╚    
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
+
+fichier_conf_liste = """
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+╦  ┬┌─┐┌┬┐┌─┐  ┌┬┐┌─┐┌─┐  ╔═╗┬┌─┐┬ ┬┬┌─┐┬─┐┌─┐  ╔═╗╔═╗╔╗╔╔═╗
+║  │└─┐ │ ├┤    ││├┤ └─┐  ╠╣ ││  ├─┤│├┤ ├┬┘└─┐  ║  ║ ║║║║╠╣ 
+╩═╝┴└─┘ ┴ └─┘  ─┴┘└─┘└─┘  ╚  ┴└─┘┴ ┴┴└─┘┴└─└─┘  ╚═╝╚═╝╝╚╝╚      
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
+
+supprimer_conf = """
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+╔═╗┬ ┬┌─┐┌─┐┬─┐┬┌┬┐┌─┐┬─┐  ┬ ┬┌┐┌  ╔═╗┬┌─┐┬ ┬┬┌─┐┬─┐  ╔═╗╔═╗╔╗╔╔═╗
+╚═╗│ │├─┘├─┘├┬┘││││├┤ ├┬┘  │ ││││  ╠╣ ││  ├─┤│├┤ ├┬┘  ║  ║ ║║║║╠╣ 
+╚═╝└─┘┴  ┴  ┴└─┴┴ ┴└─┘┴└─  └─┘┘└┘  ╚  ┴└─┘┴ ┴┴└─┘┴└─  ╚═╝╚═╝╝╚╝╚   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
+sauvegarde_conf = """
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+╔═╗┌─┐┬ ┬┬  ┬┌─┐┌─┐┌─┐┬─┐┌┬┐┌─┐┬─┐  ┬ ┬┌┐┌  ╔═╗┬┌─┐┬ ┬┬┌─┐┬─┐  ╔═╗╔═╗╔╗╔╔═╗
+╚═╗├─┤│ │└┐┌┘├┤ │ ┬├─┤├┬┘ ││├┤ ├┬┘  │ ││││  ╠╣ ││  ├─┤│├┤ ├┬┘  ║  ║ ║║║║╠╣ 
+╚═╝┴ ┴└─┘ └┘ └─┘└─┘┴ ┴┴└──┴┘└─┘┴└─  └─┘┘└┘  ╚  ┴└─┘┴ ┴┴└─┘┴└─  ╚═╝╚═╝╝╚╝╚  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
+
+scan_conf = """  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
+╔═╗┌─┐┌─┐┌┐┌  ┌┬┐┌─┐┌─┐  ╔═╗┬┌─┐┬ ┬┬┌─┐┬─┐┌─┐  ╔═╗╔═╗╔╗╔╔═╗ 
+╚═╗│  ├─┤│││   ││├┤ └─┐  ╠╣ ││  ├─┤│├┤ ├┬┘└─┐  ║  ║ ║║║║╠╣  
+╚═╝└─┘┴ ┴┘└┘  ─┴┘└─┘└─┘  ╚  ┴└─┘┴ ┴┴└─┘┴└─└─┘  ╚═╝╚═╝╝╚╝╚ooo 
+
+ /$$   /$$                                  
+| $$$ | $$                                  
+| $$$$| $$ /$$$$$$/$$$$   /$$$$$$   /$$$$$$ 
+| $$ $$ $$| $$_  $$_  $$ |____  $$ /$$__  $$    
+| $$  $$$$| $$ \ $$ \ $$  /$$$$$$$| $$  \ $$
+| $$\  $$$| $$ | $$ | $$ /$$__  $$| $$  | $$
+| $$ \  $$| $$ | $$ | $$|  $$$$$$$| $$$$$$$/
+|__/  \__/|__/ |__/ |__/ \_______/| $$____/ 
+                                  | $$      
+                                  | $$      
+                                  |__/      
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+"""
+
+restaurer_conf = """
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+╦═╗┌─┐┌─┐┌┬┐┌─┐┬─┐┌─┐┌┬┐┬┌─┐┌┐┌  ╔═╗┬┌─┐┬ ┬┬┌─┐┬─┐┌─┐  ╔═╗╔═╗╔╗╔╔═╗
+╠╦╝├┤ └─┐ │ │ │├┬┘├─┤ │ ││ ││││  ╠╣ ││  ├─┤│├┤ ├┬┘└─┐  ║  ║ ║║║║╠╣ 
+╩╚═└─┘└─┘ ┴ └─┘┴└─┴ ┴ ┴ ┴└─┘┘└┘  ╚  ┴└─┘┴ ┴┴└─┘┴└─└─┘  ╚═╝╚═╝╝╚╝╚   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+"""
+
 
 selection_5 = """
 -------Option-De-Sauvegarde--------------------------
@@ -37,15 +108,19 @@ print(Selection)
 while True: #Va créer la boucle, pour revenir toujours sélectionner une option valide.
     try: #ici le try/except va nous créer le message d'error si l'option choisi est autre chose q'un int
         option = int(input("Entrez votre sélection : "))
+        print("")
+        print("--------------------------------")
 
     except ValueError:
         print("Entrez un option de 1 au 7 svp")
+        print("")
         continue
 
     
     
     if option == 1:
-        
+        print(fichier_conf)
+        print("")
         nom_ser = input("Entrez le nom du serveur : ") #enregistre le nom du serveur dans la variable nom_ser
 
         ip_ser = input("Entrez l'adresse IP : ") #enregistre l'IP dans la variable ip_ser. (faire un input valid)
@@ -56,15 +131,26 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
 
         server_config = {"Name":nom_ser, "Ip": ip_ser , "Systeme":sys_exp, "Services UP":services_up} #met tout dans un dictionnaire
         print("")
-        print("Configuration ajoutée avec succès, oubliez pas de la sauvegarder avant d'ajouter une autre configuration!") #Une fois tous les paramètres ajoutée (faut qu'il le garde en mémoire pour qu'apres avec l'option 5 la config reste et si exit, demander si sauvegarde), idée: creer un deuxieme fichier json genre server_config_tmp)
+        print("""
+
+ /$$
+| $$
+| $$
+| $$
+|__/
+    
+ /$$
+|__/
+
+Configuration pre-enregistré. OPTION 5 pour Sauvegarder!""") #Une fois tous les paramètres ajoutée (faut qu'il le garde en mémoire pour qu'apres avec l'option 5 la config reste et si exit, demander si sauvegarde), idée: creer un deuxieme fichier json genre server_config_tmp)
         print(Selection)
     
     
     
     
     elif option == 2:
-        print("") #pour faire de l'espace(chercher comment faire plus propre)
-        print("Liste des fichiers de configuration")
+        print(modifier_une_conf)
+        print("Liste des fichiers de configuration:")
         print("")
         
         for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
@@ -102,11 +188,20 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
                     data_mod[key] = user_input #on remplace la variable par l'input de l'utilisateur (que s'il a mis quelque chose)
                 else:
                     data_mod[key] = value #sinon, on laisse la même valeur
-
-            print("Modifications faites!")
             print("")
-            print("N'oublie pas de sauvegarder avec l'option 5")
-            print("..........................................")
+            print("""
+
+ /$$
+| $$
+| $$
+| $$
+|__/
+    
+ /$$
+|__/
+
+Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
+            print("")
             print(Selection)
             print("..........................................")
                 
@@ -120,10 +215,11 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
             
 
     elif option == 3:
+        print(fichier_conf_liste)
         json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient d'effacer un fichier la function pour lister ne trouve pas le fichier. 
         print("")
         print("")
-        print("Voici tous les configurations des serveurs")
+        print("Voici tous les configurations des serveurs:")
         for file in json_files:
             with open(os.path.join(dir_path, file), 'r') as f:
                 data = json.load(f)
@@ -143,9 +239,20 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
     
     
     elif option == 4:
-        print("-------------------")
-        print("Liste des fichiers")
-        print("")
+        print(supprimer_conf)
+        print("""
+---------######---------
+----################----
+------------------------
+-----##############-----
+-----###-##--##-###-----
+-----###-##--##-###-----
+------##-##--##-##------
+------##-##--##-##------
+------############------
+""")
+        print("Liste des fichiers:")
+        print("...................")
         
         for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
             print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de 
@@ -172,7 +279,7 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
     
     
     elif option == 5:
-        
+        print(sauvegarde_conf)
         print(selection_5)
         print("")
 
@@ -212,18 +319,44 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
         print(Selection)
 
 
-    
-    
-    
     elif option == 6:
+
+        print(restaurer_conf)
+
+
+
         print("En cour d'integration, voulez ressayer une autre option")
-        
-    
-    
     
     
     elif option == 7:
-        print("En cour d'integration, voulez ressayer une autre option")
+        print(scan_conf)
+        nm = nmap.PortScanner() # Crée un objet Nmap
+
+
+        print("")
+        ip_range = input("Entrez la plage d'adresses IP à scanner (ex : 192.168.1.1/24) : ") # Définie le  la porté de le scan IP  (e.g. 192.168.1.0/24)
+        print("")
+        print("-------------------------------------------------------------------------------")
+        print("")
+
+        nm.scan(hosts=ip_range, arguments='-sV -p 1-1024') # -sV : scan et identifie la version de chaque service. Scan the IP range
+
+        # Afficher les résultat 
+        print("Résultats du scan:")
+        print("")
+        for host in nm.all_hosts(): #nm.all_hosts() nous retourne une liste avec tous les hosts (ip address) qui Nmap a scanné.
+            print(f"Host: {host}") # Affiche chaque host et sa variable
+            for proto in nm[host].all_protocols(): # Retourne une liste avec tous les protocoles détectés dans le host courent 
+                print(f"  Protocol: {proto}") # Affiche chaque protocole et sa variable
+                lport = nm[host][proto].keys() # Obtiens une liste avec tous les port ouverts dans le host courent et le protocol
+                for port in lport:
+                    print(f"    Port: {port} ({nm[host][proto][port]['state']})") # Affiche le numéro de port et son status
+                    print(f"    Service: {nm[host][proto][port]['name']}") # Affiche le nom du service up dans le port courent
+                    print(f"    Version: {nm[host][proto][port]['version']}") # Affiche la version du service up dans le port courent.
+        
+        print(Selection)
+    
+    
         
     else:
         print("Option non valide, voulez réessayer")
