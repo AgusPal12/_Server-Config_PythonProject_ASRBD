@@ -1,0 +1,33 @@
+Option 6:
+
+1. Crée un point de restauration
+	(Liste des fichier)
+	"Entres les nombre de fichiers à sauvegarder séparé par "," (Ex: 1, 2, 3) ou All pour sélectionner tous: "
+	"Entrez un commentaire: "#Crée un fichier .txt
+	"Point de restauration crée avec succès!" 
+	#crée un nouveau dossier avec date et heure, et a l'intérieur mets les fichiers voulus et le (fichier .txt) 
+
+		
+
+2. Restaurer depuis un point de restauration
+	(liste les dossier avec la date et l'heure et, pour chacun, affiche le contenu du .txt)
+	"Entre le Nombre de point de sauvegarde à restaurer: "
+	
+	(Montre le txt. et le contenu du dossier c'est à dire chaque fichier conf avec son contenu)
+	"Sélectionner le fichier conf à restaurer. Si plusieurs le séparer par "," (Ex: 1,4,5). "All" pour tous les fichier: "
+	
+	"Fichier.es sélectionné.s: "
+	(liste des fichiers sélectionnés avec son contenu)
+	
+	"Si la configuration existe, elle sera remplacé.
+	Vous êtes sure de vouloir restaurer? o/n:" 
+	#Si ALL: pour chaque fichier dans le dossier de sauvegarde, cherche s'il existe dans le dossier principal. Si oui, efface celui du principal et copy/paste celui du dossier sauvegarde. Si no, juste copy/paste celui du dossier sauvegarde.
+	#Si Fichier spécifique, fait pareil que "ALL" mais juste avec le/les fichier/s selectioné/s.
+	 
+3. Supprimer un point de sauvegarde
+	(liste les dossier avec la date et l'heure et, pour chacun, affiche le contenu du .txt)
+	"Sélectionner le fichier conf à supprimer. Si plusieurs, le séparer par "," (Ex: 1,4,5). "All" pour tous les fichier: "
+	Vous êtes sure de vouloir supprimer? o/n:
+	#Si "All" Supprime le dossier.
+	#Si Fichier spécifique, supprime fichier.
+	

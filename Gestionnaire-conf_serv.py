@@ -2,6 +2,7 @@ import os
 import json
 import pprint
 import nmap
+import shutil
 
 dir_path = '.' #variable pour stocker le repertoire où la ligne suivante va chercher les fichier .json
 json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #la function os.listdir(dir_path) retourne les fichier et repertoires qui sont dans le repertoire (dir_path)...."f for f in..." est un boucle qui va itérer dans la liste doné par os.listdir(dir_path)....if f.endswith('.json') c'est un conditional qui filtre la liste avec les fichier qui se terminent par .json
@@ -96,12 +97,40 @@ restaurer_conf = """
 
 
 selection_5 = """
--------Option-De-Sauvegarde--------------------------
+-------Options-De-Sauvegarde--------------------------
 1. Sauvegarder le nouveau Serveur
 2. Sauvegarder les modifications du serveur existant
 3. Revenir au Menu 
 -----------------------------------------------------
 """
+
+selection_6 = """
+-------Options-De-Restoration--------------------------
+1. Nouveau point de restauration
+2. Restaurer depuis un point de restauration
+3. Supprimer un point de sauvegarde
+3. Revenir au Menu
+-----------------------------------------------------
+"""
+
+def list_conf(): #Ici je define une function, car j'ai vais avoir besoin de la meme fonctionnalité pour l'option 6
+
+            print(fichier_conf_liste)
+            json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient d'effacer un fichier la function pour lister ne trouve pas le fichier. 
+            print("")
+            print("Voici toutes les configurations des serveurs:")
+            for file in json_files:
+                with open(os.path.join(dir_path, file), 'r') as f:
+                    data = json.load(f)
+                    print("")
+                    print("----------------------")
+                    print(file)
+                    print("")
+                    for key, value in data.items(): #fait une boucle pour et passe par item de "data"
+                        print(f"{key}: {value}")
+            
+
+
 print(server_config)
 print(Selection)
 
@@ -152,7 +181,7 @@ Configuration pre-enregistré. OPTION 5 pour Sauvegarder!""") #Une fois tous les
         print(modifier_une_conf)
         print("Liste des fichiers de configuration:")
         print("")
-        
+        json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
         for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
             print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de 
         
@@ -215,30 +244,16 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
             
 
     elif option == 3:
-        print(fichier_conf_liste)
-        json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient d'effacer un fichier la function pour lister ne trouve pas le fichier. 
-        print("")
-        print("")
-        print("Voici tous les configurations des serveurs:")
-        for file in json_files:
-            with open(os.path.join(dir_path, file), 'r') as f:
-                data = json.load(f)
-                print("")
-                print("----------------------")
-                print("")
-                print(file)
-                print("")
-                for key, value in data.items(): #fait une boucle pour et passe par item de "data"
-                    print(f"{key}: {value}")
-        print("")
-        print("")
-        print(Selection)
+
+          list_conf()
+          print(Selection) 
         
         
     
     
     
     elif option == 4:
+        json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient de créer un fichier la function pour supprimer ne trouve pas le fichier. 
         print(supprimer_conf)
         print("""
 ---------######---------
@@ -320,12 +335,87 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
 
 
     elif option == 6:
-
+        json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
+        list_conf() 
         print(restaurer_conf)
+        print(selection_6)
+        while True:
+            try:
+                option_6 = int(input("Entrez une option: "))
+
+            except ValueError:
+                print("Options possibles: 1, 2 ou 3, Réessayez: ")
+                continue
+
+            if option_6 == 1:
+
+                list_conf() #On appel la function pour lister les fichier conf.
+                print("")
+                while True:
+                    json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
+                    
+                    fichier_conf_rest = input(f"Entres les nombre de fichiers à sauvegarder séparé par ',' (Ex: 1, 2, 3) ou all pour sélectionner tous: ")
+
+                    if fichier_conf_rest == "all":
+        
+                        nom_sauvegarde = input("Entrer un nom pour le point de sauvegarde: ")
+                        
+                        from datetime import datetime #fonctionnalité pour récupérer la date et l'heure
+                        now = datetime.now()
+                        jour_heure = now.strftime("%d-%m-%Y_%H-%M") #j'ai du modifier le format pour qu'il soit valid en windows.
+                        
+                        dossier_sauvegarde = os.path.join('./Points_de_Restauration', nom_sauvegarde + "_" + jour_heure) #Ici avec la function path join gère la concatenation du nom de mon nouveau dossier, et son path. j'ai du modifier le format pour qu'il soit valid en windows.
+                        os.mkdir(dossier_sauvegarde) #Ici va créer le dossier avec la variable que je viens de créer au haut.
+
+                        for fichier in json_files:
+                            shutil.copy(os.path.join(dir_path, fichier), os.path.join(dossier_sauvegarde, fichier)) #Fonctionnalité shutil pour copier coller.
+                        
+                        commentaire = input("Entrer un commentaire pour le point de restauration: ")
+                        with open(os.path.join(dossier_sauvegarde, 'Commentaire.txt'), "w") as f:  #ici aussi, on dois utiliser "os.path.join" pour bien formater mon path pour pouvoir créer mon fichier commentaire.txt
+                            f.write(commentaire) # Ici écris le commentaire dans le fichier .txt
+                            print("Pont de restauration enregistrée avec succès!")
+                            break
+                    """
+                    elif fichier_conf_rest.isdigit():
+                        fichier_conf_rest = [int(fichier_conf_rest)] 
+                        print(fichier_conf_rest)
+                        break
+                        #ça a l'air de functioner pour un seule fichier, maintenaint dans la ligne suivante on va tester de faire plusieurs entree, et voir si seulement avec une ça sufit aussi.
+                    
+                    elif "," in fichier_conf_rest:
+                        fichier_conf_rest = [int(x) for x in fichier_conf_rest.split(",")]
+                        print(fichier_conf_rest)
+
+                        for fichier in [f for f in json_files if int(fichier_conf_rest) in [int(x) for x in f.split(",")]]:
+                            shutil.copy(os.path.join(dir_path, fichier), os.path.join(dossier_sauvegarde, fichier))
+                        break
+                        
+                        
+                    
+
+                    
+                         
+
+                    
+                    else:
+                        try:
+                            nom_fich_choisi_sauvegarde = [int(num) for num in fichier_conf_rest.split(",")] #
+                            print("les numeros", nom_fich_choisi_sauvegarde)
+                            break
+                        
+                        except ValueError:
+                            print("Entrez un nombre ou 'All'")
+                            """
+
+                    
+                    
+                        
+                
 
 
+        
 
-        print("En cour d'integration, voulez ressayer une autre option")
+        
     
     
     elif option == 7:

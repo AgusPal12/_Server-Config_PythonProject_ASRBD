@@ -1,0 +1,8 @@
+{
+    "Name": "Serveur2",
+    "Ip": "192.168.0.2",
+    "Systeme": "Debian",
+    "Services UP": [
+        "php, apache"
+    ]
+}
