@@ -152,10 +152,11 @@ def list_conf(): #Ici je define une function, car j'ai vais avoir besoin de la m
 
 
 print(server_config)
-print(Selection)
+
 
 while True: #Va créer la boucle, pour revenir toujours sélectionner une option valide.
     try: #ici le try/except va nous créer le message d'error si l'option choisi est autre chose q'un int
+        print(Selection)
         option = int(input("Entrez votre sélection : "))
         print("")
         print("--------------------------------")
@@ -192,8 +193,7 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
 |__/
 
 Configuration pre-enregistré. OPTION 5 pour Sauvegarder!""") #Une fois tous les paramètres ajoutée (faut qu'il le garde en mémoire pour qu'apres avec l'option 5 la config reste et si exit, demander si sauvegarde), idée: creer un deuxieme fichier json genre server_config_tmp)
-        print(Selection)
-    
+        
     
     
     
@@ -251,7 +251,6 @@ Configuration pre-enregistré. OPTION 5 pour Sauvegarder!""") #Une fois tous les
 
 Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
             print("")
-            print(Selection)
             print("..........................................")
                 
                     #SI ON VEUT QUE çA SOIT SAUVEGARDé DIRECTEMENT PENDANT QU'ON MODIFIE
@@ -266,11 +265,8 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
     elif option == 3:
 
           list_conf()
-          print(Selection) 
-        
-        
-    
-    
+ 
+
     
     elif option == 4:
         json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient de créer un fichier la function pour supprimer ne trouve pas le fichier. 
@@ -289,9 +285,11 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
         print("Liste des fichiers:")
         print("...................")
         
-        for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
-            print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de 
+        #Le code suivante à été commenté et remplacé par la liste qui montre aussi le contenu du fichier. Avec la function list_conf()
+        #for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
+        #    print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de fichier.
         
+        list_conf()
         print("")
         serv_asup = int(input("Choisir le numéro fichier de configuration qui vous voulez supprimer: "))
         print("")
@@ -302,17 +300,13 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
         while True:
             if confirmation == "o":
                 os.remove(json_files[serv_asup])
-                print("Fichier supprimé avec succès")
+                print("Fichier supprimé avec succès!!")
                 break
             elif confirmation == "n":
                 print("Fichier pas supprimé")
                 break
-        print(Selection)
-    
-    
-    
-    
-    
+
+
     elif option == 5:
         print(sauvegarde_conf)
         print(selection_5)
@@ -351,29 +345,12 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
                 print("Entrez soit 1, soit 2, soit 3")
 
             
-        print(Selection)
+        
 
     elif option == 6:
-        json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
-        list_conf() 
-        print(restaurer_conf)
-        print(selection_6)
-        while True:
-            try:
-                option_6 = int(input("Entrez une option: "))
-
-            except ValueError:
-                print("Options possibles: 1, 2 ou 3, Réessayez: ")
-                continue
-
-            if option_6 == 1:
-                json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
-                list_conf() #On appel la function pour lister les fichier conf.
-                print("")
-                
-
-
-                def function_nvo_dossier():
+        
+        
+        def function_nvo_dossier():
                     nom_sauvegarde = input("Entrer un nom pour le point de sauvegarde: ")
                     
                     from datetime import datetime #fonctionnalité pour récupérer la date et l'heure
@@ -390,8 +367,27 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
                     print("Pont de restauration enregistrée avec succès!")
 
                     return dossier_sauvegarde #ici ça permets d'utiliser l'information de la function dans une autre part de mon code.
-                        
         
+        
+        json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
+        list_conf() 
+        print(restaurer_conf)
+        
+        while True:
+
+            print(selection_6)
+            
+            try:
+                option_6 = int(input("Entrez une option: "))
+
+            except ValueError:
+                print("Options possibles: 1, 2 ou 3, Réessayez: ")
+                continue
+
+            if option_6 == 1:
+                json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
+                list_conf() #On appel la function pour lister les fichier conf.
+                print("")
 
 
                 while True:
@@ -452,7 +448,9 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
 
                         elif fichier_conf_rest != "": #pour tout autre entrée different d'une entrée vide donne un erreur.
                             print("Erreur : Entrée invalide!")
-
+            
+            if option_6 == 3:
+                break
                    
                                           
 
@@ -484,7 +482,7 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
                     print(f"    Service: {nm[host][proto][port]['name']}") # Affiche le nom du service up dans le port courent
                     print(f"    Version: {nm[host][proto][port]['version']}") # Affiche la version du service up dans le port courent.
         
-        print(Selection)
+        
     
     
         
