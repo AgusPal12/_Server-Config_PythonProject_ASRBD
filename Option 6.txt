@@ -7,7 +7,7 @@ Option 6:
 	"Point de restauration crée avec succès!" 
 	#crée un nouveau dossier avec date et heure, et a l'intérieur mets les fichiers voulus et le (fichier .txt) 
 
-		
+
 
 2. Restaurer depuis un point de restauration
 	(liste les dossier avec la date et l'heure et, pour chacun, affiche le contenu du .txt)

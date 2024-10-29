@@ -395,8 +395,8 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
 
 
                 while True:
-                    try:
-                        #faut gérer les erreurs quand on écris une autre choose.                 
+                    
+                                         
                         fichier_conf_rest = input("Entres les nombre de fichiers à sauvegarder séparé par ',' (Ex: 1, 2, 3) ou all pour sélectionner tous: ")
 
                 
@@ -430,7 +430,7 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
                             break
                                 
                    
-                        #Il faut gérer les erreurs dans cette option, pas encore finis...:
+                        
                         elif fichier_conf_rest.isdigit(): #Si  l'utilisateur entre un seul int, la function le met dans une liste.  Mais avant il le transforme en un Int
                             
                             try:
@@ -440,9 +440,9 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
                                 print("Erreur : les valeurs doivent être des entiers.") 
                                 continue
 
-                            #if not all(1 <= fichier_conf_rest <= len(json_files)): #ici on gère les entrées des l'utilisateur que sont plus grand que la quantité des fichiers, ou négatif 
-                            #    print("Erreur : le numéro de fichier doive être compris entre 1 et", len(json_files))
-                            #   continue
+                            if not 1 <= fichier_conf_rest <= len(json_files): #ici on gère les entrées des l'utilisateur que sont plus grand que la quantité des fichiers, ou négatif 
+                                print("Erreur : le numéro de fichier doive être compris entre 1 et", len(json_files))
+                                continue
 
                             dossier_path3 = function_nvo_dossier()
 
@@ -450,12 +450,11 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
                             shutil.copy(fichier_path, dossier_path3)
                             break
 
-                        #else:
-                            #print("Nombre de fichiers à sauvegarder erroné, revérifier")
+                        elif fichier_conf_rest != "": #pour tout autre entrée different d'une entrée vide donne un erreur.
+                            print("Erreur : Entrée invalide!")
 
-                    
-                    except ValueError:
-                        print("Entrée incorrecte. Entres les nombre de fichiers à sauvegarder séparé par ',' (Ex: 1, 2, 3) ou all pour sélectionner tous: ")
+                   
+                                          
 
     
     
