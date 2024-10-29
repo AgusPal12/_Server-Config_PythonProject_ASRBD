@@ -1,0 +1,8 @@
+{
+    "Name": "Serveur3",
+    "Ip": "192.168.0.3",
+    "Systeme": "Centos:7",
+    "Services UP": [
+        "Stak LAMP"
+    ]
+}

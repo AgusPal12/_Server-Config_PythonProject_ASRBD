@@ -119,6 +119,16 @@ def list_conf(): #Ici je define une function, car j'ai vais avoir besoin de la m
             json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient d'effacer un fichier la function pour lister ne trouve pas le fichier. 
             print("")
             print("Voici toutes les configurations des serveurs:")
+            print("")
+            print("----------------------")
+
+            #for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
+            #print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de 
+
+            for i, file in enumerate(json_files, start=1): #Ici j'ai récupéré le code de l'option 2 (pour énumérer les fichiers) et j'ai l’intégré à la function que faisait la boucle pour ouvrir chaque fichier et montrer son contenu. Voici l'ancienne function qui énumère pas le nom du fichier:
+            
+            
+                """
             for file in json_files:
                 with open(os.path.join(dir_path, file), 'r') as f:
                     data = json.load(f)
@@ -128,6 +138,16 @@ def list_conf(): #Ici je define une function, car j'ai vais avoir besoin de la m
                     print("")
                     for key, value in data.items(): #fait une boucle pour et passe par item de "data"
                         print(f"{key}: {value}")
+            """
+
+                print(f"{i}. {file}")
+                with open(os.path.join(dir_path, file), 'r') as f:
+                    data = json.load(f)
+                    print("")               
+                    for key, value in data.items(): #fait une boucle pour et passe par item de "data"
+                        print(f"{key}: {value}")
+                    print("")   
+                    print("----------------------")
             
 
 
@@ -333,7 +353,6 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
             
         print(Selection)
 
-
     elif option == 6:
         json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
         list_conf() 
@@ -348,74 +367,96 @@ Modifications pre-enregistré. OPTION 5 pour Sauvegarder!""")
                 continue
 
             if option_6 == 1:
-
+                json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
                 list_conf() #On appel la function pour lister les fichier conf.
                 print("")
-                while True:
-                    json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
-                    
-                    fichier_conf_rest = input(f"Entres les nombre de fichiers à sauvegarder séparé par ',' (Ex: 1, 2, 3) ou all pour sélectionner tous: ")
-
-                    if fichier_conf_rest == "all":
-        
-                        nom_sauvegarde = input("Entrer un nom pour le point de sauvegarde: ")
-                        
-                        from datetime import datetime #fonctionnalité pour récupérer la date et l'heure
-                        now = datetime.now()
-                        jour_heure = now.strftime("%d-%m-%Y_%H-%M") #j'ai du modifier le format pour qu'il soit valid en windows.
-                        
-                        dossier_sauvegarde = os.path.join('./Points_de_Restauration', nom_sauvegarde + "_" + jour_heure) #Ici avec la function path join gère la concatenation du nom de mon nouveau dossier, et son path. j'ai du modifier le format pour qu'il soit valid en windows.
-                        os.mkdir(dossier_sauvegarde) #Ici va créer le dossier avec la variable que je viens de créer au haut.
-
-                        for fichier in json_files:
-                            shutil.copy(os.path.join(dir_path, fichier), os.path.join(dossier_sauvegarde, fichier)) #Fonctionnalité shutil pour copier coller.
-                        
-                        commentaire = input("Entrer un commentaire pour le point de restauration: ")
-                        with open(os.path.join(dossier_sauvegarde, 'Commentaire.txt'), "w") as f:  #ici aussi, on dois utiliser "os.path.join" pour bien formater mon path pour pouvoir créer mon fichier commentaire.txt
-                            f.write(commentaire) # Ici écris le commentaire dans le fichier .txt
-                            print("Pont de restauration enregistrée avec succès!")
-                            break
-                    """
-                    elif fichier_conf_rest.isdigit():
-                        fichier_conf_rest = [int(fichier_conf_rest)] 
-                        print(fichier_conf_rest)
-                        break
-                        #ça a l'air de functioner pour un seule fichier, maintenaint dans la ligne suivante on va tester de faire plusieurs entree, et voir si seulement avec une ça sufit aussi.
-                    
-                    elif "," in fichier_conf_rest:
-                        fichier_conf_rest = [int(x) for x in fichier_conf_rest.split(",")]
-                        print(fichier_conf_rest)
-
-                        for fichier in [f for f in json_files if int(fichier_conf_rest) in [int(x) for x in f.split(",")]]:
-                            shutil.copy(os.path.join(dir_path, fichier), os.path.join(dossier_sauvegarde, fichier))
-                        break
-                        
-                        
-                    
-
-                    
-                         
-
-                    
-                    else:
-                        try:
-                            nom_fich_choisi_sauvegarde = [int(num) for num in fichier_conf_rest.split(",")] #
-                            print("les numeros", nom_fich_choisi_sauvegarde)
-                            break
-                        
-                        except ValueError:
-                            print("Entrez un nombre ou 'All'")
-                            """
-
-                    
-                    
-                        
                 
 
 
+                def function_nvo_dossier():
+                    nom_sauvegarde = input("Entrer un nom pour le point de sauvegarde: ")
+                    
+                    from datetime import datetime #fonctionnalité pour récupérer la date et l'heure
+                    now = datetime.now()
+                    jour_heure = now.strftime("%d-%m-%Y_%H-%M") #j'ai du modifier le format pour qu'il soit valid en windows.
+                        
+                    dossier_sauvegarde = os.path.join('./Points_de_Restauration', nom_sauvegarde + "_" + jour_heure) #Ici avec la function path join gère la concatenation du nom de mon nouveau dossier, et son path. j'ai du modifier le format pour qu'il soit valid en windows.
+                    os.mkdir(dossier_sauvegarde) #Ici va créer le dossier avec la variable que je viens de créer au haut.
+                    
+
+                    commentaire = input("Entrer un commentaire pour le point de restauration: ")
+                    with open(os.path.join(dossier_sauvegarde, 'Commentaire.txt'), "w") as f:  #ici aussi, on dois utiliser "os.path.join" pour bien formater mon path pour pouvoir créer mon fichier commentaire.txt
+                        f.write(commentaire) # Ici écris le commentaire dans le fichier .txt
+                    print("Pont de restauration enregistrée avec succès!")
+
+                    return dossier_sauvegarde #ici ça permets d'utiliser l'information de la function dans une autre part de mon code.
+                        
         
 
-        
+
+                while True:
+                    try:
+                        #faut gérer les erreurs quand on écris une autre choose.                 
+                        fichier_conf_rest = input("Entres les nombre de fichiers à sauvegarder séparé par ',' (Ex: 1, 2, 3) ou all pour sélectionner tous: ")
+
+                
+                                                       
+                        if fichier_conf_rest == "all":
+                            
+                            dossier_path1 = function_nvo_dossier() #charge la variable avec le contenu crée par function_nvo_dossier() pour être utilisé dans la boucle suivante et aussi lance la function_nvo_dossier()
+                                                    
+                            for fichier in json_files:
+                                shutil.copy(os.path.join(dir_path, fichier), os.path.join(dossier_path1, fichier)) #Fonctionnalité shutil pour copier coller.
+                            
+                        
+
+                        elif ',' in fichier_conf_rest: #Ici vérifie si dans l'entrée de l'utilisateur il a des ",". va les séparer les où il y a des ',' et les metre dans une liste. Mais avant il le transforme en un Int
+
+                            
+                            try:
+                                fichier_conf_rest = [int(x) for x in fichier_conf_rest.split(',')] #Prends les entrées de l'utilisateur, et si sont entiers, séparés par , va a couper dans la , et metre les int dans une liste.
+                            except ValueError:
+                                print("Erreur : les valeurs doivent être des entiers.") 
+                                continue
+                            if not all(1 <= x <= len(json_files) for x in fichier_conf_rest): #ici on gère les entrées des l'utilisateur que sont plus grand que la quantité des fichiers, ou négatif 
+                                print("Erreur : les numéros de fichiers doivent être compris entre 1 et", len(json_files))
+                                continue 
+
+                            dossier_path2 = function_nvo_dossier() #charge la variable avec le path de mon nouveau dossier crée par function_nvo_dossier() 
+
+                            for fichiers_rest_choisi in fichier_conf_rest:
+                                fichier_path = os.path.join(dir_path, json_files[fichiers_rest_choisi - 1])                  
+                                shutil.copy(fichier_path, dossier_path2)
+                            break
+                                
+                   
+                        #Il faut gérer les erreurs dans cette option, pas encore finis...:
+                        elif fichier_conf_rest.isdigit(): #Si  l'utilisateur entre un seul int, la function le met dans une liste.  Mais avant il le transforme en un Int
+                            
+                            try:
+
+                                fichier_conf_rest = int(fichier_conf_rest) #liste d'un seule element? try just avec ()
+                            except ValueError:
+                                print("Erreur : les valeurs doivent être des entiers.") 
+                                continue
+
+                            #if not all(1 <= fichier_conf_rest <= len(json_files)): #ici on gère les entrées des l'utilisateur que sont plus grand que la quantité des fichiers, ou négatif 
+                            #    print("Erreur : le numéro de fichier doive être compris entre 1 et", len(json_files))
+                            #   continue
+
+                            dossier_path3 = function_nvo_dossier()
+
+                            fichier_path = os.path.join(dir_path, json_files[fichier_conf_rest - 1])
+                            shutil.copy(fichier_path, dossier_path3)
+                            break
+
+                        #else:
+                            #print("Nombre de fichiers à sauvegarder erroné, revérifier")
+
+                    
+                    except ValueError:
+                        print("Entrée incorrecte. Entres les nombre de fichiers à sauvegarder séparé par ',' (Ex: 1, 2, 3) ou all pour sélectionner tous: ")
+
     
     
     elif option == 7:
