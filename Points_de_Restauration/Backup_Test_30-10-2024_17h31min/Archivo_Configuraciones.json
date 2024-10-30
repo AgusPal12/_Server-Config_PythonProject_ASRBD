@@ -1,0 +1,6 @@
+{
+    "Name": "Servidor_Base_de_Datos",
+    "Ip": "192.168.23.24",
+    "Systeme": "Debian",
+    "Services UP": "php, mysql, apache"
+}
