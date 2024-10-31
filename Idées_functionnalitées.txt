@@ -1,4 +1,4 @@
-Option 6:
+Pour Option 6:
 
 1. Crée un point de restauration
 	(Liste des fichier)
@@ -31,3 +31,10 @@ Option 6:
 	#Si "All" Supprime le dossier.
 	#Si Fichier spécifique, supprime fichier.
 	
+Notes amélioration:
+Mécanisme de sauvegarde qu'ont on crée un nouveau fichier conf pas pratique. car on dois aller ailleurs pour sauvegarder.
+Mécanisme actuel: écrase les fichiers avec le même nom. Solution: Informer le quel son les fichiers qui va écraser, et donner a choisir si oui où non.
+Messages d'error et messages générales pas uniformes dans tout le code.
+Différents façons de parcourir les menus, mieux si c'est tout de la même façon.
+Pas d'optimisation, utiliser plus de functions().
+

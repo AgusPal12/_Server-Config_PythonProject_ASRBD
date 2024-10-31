@@ -344,19 +344,18 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
 
                                         
              
-
                 print("")
                 print("")
-                print("-------------------------------")
+                print("-----------------------------------------------------------------------------------")
                 serv_asup -= 1 #l’opérateur -= soustrait (dans ce cas 1) x quantité d'elements dans la liste indexée. Important plus tard quand il va afficher la liste de fichier dans le dossier de manière qu'il commence par 1
                 confirmation = input(f"Nom du fichier: {os.path.basename(json_files[serv_asup])} à supprimer, Voulez vous supprimer le fichier o/n: ") #imprime le nom du fichier, pour ça utilise la fonctionnalité os.path.basename dans le fichier choisi
                 while True:
                     if confirmation == "o":
                         os.remove(json_files[serv_asup])
-                        print("Fichier supprimé avec succès!!")
+                        print("\nFichier supprimé avec succès!!\n\n")
                         break
                     elif confirmation == "n":
-                        print("Fichier pas supprimé")
+                        print("\n...Fichier pas supprimé...\n\n")
                         break
 
 
@@ -440,7 +439,8 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
             
 
         def function_nvo_dossier():
-                    nom_sauvegarde = input("Entrer un nom pour le point de sauvegarde: ")
+                    
+                    nom_sauvegarde = input("\n------------------------------------------\nEntrer un nom pour le point de sauvegarde: ")
                     
                     from datetime import datetime #fonctionnalité pour récupérer la date et l'heure
                     now = datetime.now()
@@ -450,10 +450,11 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
                     os.mkdir(dossier_sauvegarde) #Ici va créer le dossier avec la variable que je viens de créer au haut.
                     
 
-                    commentaire = input("Entrer un commentaire pour le point de restauration: ")
+                    commentaire = input("---------------------------------------------------\nEntrer un commentaire pour le point de restauration: ")
                     with open(os.path.join(dossier_sauvegarde, 'Commentaire.txt'), "w") as f:  #ici aussi, on dois utiliser "os.path.join" pour bien formater mon path pour pouvoir créer mon fichier commentaire.txt
                         f.write(commentaire) # Ici écris le commentaire dans le fichier .txt
-                    print("Point de restauration enregistrée avec succès!")
+                    print("")
+                    print("----------------------------------------------\nPoint de restauration enregistrée avec succès!\n\n")
 
                         
 
@@ -496,7 +497,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
                 while True:
                     
                                          
-                        fichier_conf_rest = input("- Entrer le nombre de fichier à sauvegarder \n- Si plusieurs séparer par ',' (Ex: 1, 2, 3) \n- 'all' pour sélectionner tous\n- 'r' Pour retourner au menu precedent.\nEntrer votre choix: ")
+                        fichier_conf_rest = input("- Entrer le nombre de fichier à sauvegarder \n- Si plusieurs séparer par ',' (Ex: 1, 2, 3) \n- 'all' pour sélectionner tous\n- 'r' Pour retourner au menu precedent.\n\nEntrer votre choix: ")
 
                 
                                                        
@@ -601,7 +602,65 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
 
 
             if option_6 == 3:
-                break
+                
+                print("")
+                print("----------------------------------")
+                print("Liste des points de restauration: ")
+                print("----------------------------------")
+                print("")
+                print("")
+                
+                
+                subfolders, path_dossier = list_dossier_restauration() #ici je défini les variable qui va contenir ma liste de sub_dossiers qui se trouve en list_dossier_restauration() et aussi la va afficher.
+                    
+                
+                while True:
+                    
+ 
+                    try:
+                        print("")
+                        selection_point_a_restaurer = input("Entrez le N° de point de restauration à supprimer\n- 'r' Pour retourner au menu precedent : ")
+                    
+                    
+                    
+                        if selection_point_a_restaurer == 'r': 
+                            break
+                        
+                        selection_point_a_restaurer = int(selection_point_a_restaurer) #on transforme le str en int 
+                        
+                        if not 1 <= selection_point_a_restaurer <= len(subfolders):
+                            print("Erreur : le numéro de fichier doive être compris entre 1 et", len(subfolders))
+                            continue
+                        
+                        while True:
+                            try:
+                                confirmation = input(f"-----------------------------------------------------------------------------------------------------------------------\nNom du Point de restauration à supprimer: {subfolders[selection_point_a_restaurer - 1]}, Voulez vous supprimer le fichier o/n: ")
+                                if confirmation == 'o':
+                                    dossier_pdr_cible = subfolders[selection_point_a_restaurer - 1] #on établie la position dans la liste pour identifier le dossier à supprimer.
+                        
+                                    shutil.rmtree(os.path.join(path_dossier, dossier_pdr_cible))#Supprime le dossier
+                                            
+                                    print("\n!!!!!!!!!!!!!!!!!!!\n Suppression réussi\n!!!!!!!!!!!!!!!!!!!")
+                                    break
+                                    
+                                elif confirmation == 'n':
+                                    print("Dossier pas supprimé...")
+                                    break
+                                else:
+                                    print("Reponse possibles: 'o' or 'n'...réessayez")
+                                    continue
+                            except ValueError:
+                                print("testestest")
+                                break
+                        
+                        
+                        
+                   
+                    except ValueError:
+                        print("Erreur : les valeurs doivent être des entiers.") 
+                        continue
+
+                
                    
                                           
             else:

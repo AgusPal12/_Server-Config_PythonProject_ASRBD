@@ -1,8 +1,0 @@
-{
-    "Name": "Serveur_BD",
-    "Ip": "123.123.234.345",
-    "Systeme": "Debian",
-    "Services UP": [
-        "mysql"
-    ]
-}

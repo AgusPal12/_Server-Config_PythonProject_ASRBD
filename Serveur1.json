@@ -1,0 +1,8 @@
+{
+    "Name": "LAMP_01",
+    "Ip": "123.432.123.543",
+    "Systeme": "Debian",
+    "Services UP": [
+        "apache, php, Mairadb"
+    ]
+}
