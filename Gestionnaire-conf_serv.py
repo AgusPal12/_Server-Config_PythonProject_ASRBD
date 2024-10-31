@@ -4,6 +4,9 @@ import pprint
 import nmap
 import shutil
 import glob
+from colorama import Fore, Back, Style, init
+
+init()
 
 dir_path = '.' #variable pour stocker le repertoire où la ligne suivante va chercher les fichier .json
 json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #la function os.listdir(dir_path) retourne les fichier et repertoires qui sont dans le repertoire (dir_path)...."f for f in..." est un boucle qui va itérer dans la liste doné par os.listdir(dir_path)....if f.endswith('.json') c'est un conditional qui filtre la liste avec les fichier qui se terminent par .json
@@ -16,18 +19,17 @@ titre_server_config = """
 ░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░▀░░░▀▀▀░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀
 """
 Selection = """
-
-          ╔╦╗┌─┐┌┐┌┬ ┬         
---------  ║║║├┤ ││││ │  ---------   
-          ╩ ╩└─┘┘└┘└─┘        
-1. Ajouter une configuration 
-2. Modifier une configuration 
-3. Lister les configurations 
-4. Supprimer une configuration
+          ╔╦╗┌─┐┌┐┌┬ ┬            
+--------  ║║║├┤ ││││ │  --------- 
+          ╩ ╩└─┘┘└┘└─┘            
+1. Ajouter une configuration      
+2. Modifier une configuration     
+3. Lister les configurations      
+4. Supprimer une configuration    
 5. Sauvegarder les configurations 
-6. Restaurer les configurations 
-7. Scanner les serveurs (NMAP) 
----------------------------------
+6. Restaurer les configurations   
+7. Scanner les serveurs (NMAP)    
+--------------------------------- 
 """
 fichier_conf = """
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -116,7 +118,7 @@ selection_6 = """
 
 def list_conf(): #Ici je define une function, car j'ai vais avoir besoin de la meme fonctionnalité pour l'option 6
 
-            print(fichier_conf_liste)
+            print(Fore.CYAN + Style.BRIGHT + fichier_conf_liste + Style.RESET_ALL) 
             json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient d'effacer un fichier la function pour lister ne trouve pas le fichier. 
             print("")
             print("---------------------------------------------")
@@ -154,12 +156,12 @@ def list_conf(): #Ici je define une function, car j'ai vais avoir besoin de la m
             
 
 
-print(titre_server_config)
+print(Style.BRIGHT + Fore.BLUE + titre_server_config + Style.RESET_ALL)
 
 
 while True: #Va créer la boucle, pour revenir toujours sélectionner une option valide.
     try: #ici le try/except va nous créer le message d'error si l'option choisi est autre chose q'un int
-        print(Selection)
+        print(Style.BRIGHT + Fore.GREEN + Selection + Style.RESET_ALL)
         option = int(input("Entrez votre sélection : "))
         print("")
         print("--------------------------------")
@@ -172,7 +174,7 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
     
     
     if option == 1:
-        print(fichier_conf)
+        print(Fore.CYAN + Style.BRIGHT + fichier_conf + Style.RESET_ALL)
         print("")
         try:
             nom_ser = input("Entrez le nom du nouveau serveur\nou 'r' pour revenir au menu : ") #enregistre le nom du serveur dans la variable nom_ser
@@ -210,7 +212,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 1 pour Sauvegarder!""") #Une fois
     
     
     elif option == 2:
-        print(modifier_une_conf)
+        print(Fore.CYAN + Style.BRIGHT + modifier_une_conf + Style.RESET_ALL)
         print("------------------------------------")
         print("Liste des fichiers de configuration\n(Pour voir les contenus de toutes les fichiers --> revenir au menu/opt 3)")
         print("------------------------------------")
@@ -305,7 +307,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
     
     elif option == 4:
         json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient de créer un fichier la function pour supprimer ne trouve pas le fichier. 
-        print(supprimer_conf)
+        print(Fore.CYAN + Style.BRIGHT + supprimer_conf + Style.RESET_ALL) 
         print("""
 ---------######---------
 ----################----
@@ -360,7 +362,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
 
 
     elif option == 5:
-        print(sauvegarde_conf)
+        print(Fore.CYAN + Style.BRIGHT + sauvegarde_conf + Style.RESET_ALL) 
         print(selection_5)
         print("")
 
@@ -670,30 +672,40 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
                 break
     
     elif option == 7:
-        print(scan_conf)
+        print(Fore.CYAN + Style.BRIGHT + scan_conf + Style.RESET_ALL) 
         nm = nmap.PortScanner() # Crée un objet Nmap
 
 
         print("")
-        ip_range = input("Entrez la plage d'adresses IP à scanner (ex : 192.168.1.1/24) : ") # Définie le  la porté de le scan IP  (e.g. 192.168.1.0/24)
+        ip_range = input("Entrez la plage d'adresses IP à scanner (ex : 192.168.1.1/24)\n- 'r' Pour revenir au menu : ") # Définie le  la porté de le scan IP  (e.g. 192.168.1.0/24)
         print("")
         print("-------------------------------------------------------------------------------")
         print("")
+        while True:
+            try:
 
-        nm.scan(hosts=ip_range, arguments='-sV -p 1-1024') # -sV : scan et identifie la version de chaque service. Scan the IP range
+                if ip_range == 'r':
+                    break
+                else:
+                    continue
+                nm.scan(hosts=ip_range, arguments='-sV -p 1-1024') # -sV : scan et identifie la version de chaque service. Scan the IP range
 
-        # Afficher les résultat 
-        print("Résultats du scan:")
-        print("")
-        for host in nm.all_hosts(): #nm.all_hosts() nous retourne une liste avec tous les hosts (ip address) qui Nmap a scanné.
-            print(f"Host: {host}") # Affiche chaque host et sa variable
-            for proto in nm[host].all_protocols(): # Retourne une liste avec tous les protocoles détectés dans le host courent 
-                print(f"  Protocol: {proto}") # Affiche chaque protocole et sa variable
-                lport = nm[host][proto].keys() # Obtiens une liste avec tous les port ouverts dans le host courent et le protocol
-                for port in lport:
-                    print(f"    Port: {port} ({nm[host][proto][port]['state']})") # Affiche le numéro de port et son status
-                    print(f"    Service: {nm[host][proto][port]['name']}") # Affiche le nom du service up dans le port courent
-                    print(f"    Version: {nm[host][proto][port]['version']}") # Affiche la version du service up dans le port courent.
+                # Afficher les résultat 
+                print("Résultats du scan:")
+                print("")
+                for host in nm.all_hosts(): #nm.all_hosts() nous retourne une liste avec tous les hosts (ip address) qui Nmap a scanné.
+                    print(f"Host: {host}") # Affiche chaque host et sa variable
+                    for proto in nm[host].all_protocols(): # Retourne une liste avec tous les protocoles détectés dans le host courent 
+                        print(f"  Protocol: {proto}") # Affiche chaque protocole et sa variable
+                        lport = nm[host][proto].keys() # Obtiens une liste avec tous les port ouverts dans le host courent et le protocol
+                        for port in lport:
+                            print(f"    Port: {port} ({nm[host][proto][port]['state']})") # Affiche le numéro de port et son status
+                            print(f"    Service: {nm[host][proto][port]['name']}") # Affiche le nom du service up dans le port courent
+                            print(f"    Version: {nm[host][proto][port]['version']}") # Affiche la version du service up dans le port courent.
+            
+            except ValueError:
+                    print("Error...")
+                    break
         
         
     
