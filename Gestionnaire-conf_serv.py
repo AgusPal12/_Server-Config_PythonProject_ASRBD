@@ -174,104 +174,127 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
     if option == 1:
         print(fichier_conf)
         print("")
-        nom_ser = input("Entrez le nom du serveur : ") #enregistre le nom du serveur dans la variable nom_ser
+        try:
+            nom_ser = input("Entrez le nom du nouveau serveur\nou 'r' pour revenir au menu : ") #enregistre le nom du serveur dans la variable nom_ser
+            while True:
+                try:
 
-        ip_ser = input("Entrez l'adresse IP : ") #enregistre l'IP dans la variable ip_ser. (faire un input valid)
-           
-        sys_exp = input("Entrez le système d'exploitation : ") #enregistre le système d’exploitation dans la variable sys_exp
+                    if nom_ser == 'r':
+                        break
+                    else:
+            
+                        ip_ser = input("Entrez l'adresse IP : ") #enregistre l'IP dans la variable ip_ser. (faire un input valid)
+                    
+                        sys_exp = input("Entrez le système d'exploitation : ") #enregistre le système d’exploitation dans la variable sys_exp
 
-        services_up = [input("Entrez les services en cours d'exécution (séparés par des virgules) :")] #enregiste les services qui sont en cours d'exécution dans la liste services_up (faire invalid si mauvais format) 
+                        services_up = [input("Entrez les services en cours d'exécution (séparés par des virgules) :")] #enregiste les services qui sont en cours d'exécution dans la liste services_up (faire invalid si mauvais format) 
 
-        server_config = {"Name":nom_ser, "Ip": ip_ser , "Systeme":sys_exp, "Services UP":services_up} #met tout dans un dictionnaire
-        print("")
-        print("""
+                        server_config = {"Name":nom_ser, "Ip": ip_ser , "Systeme":sys_exp, "Services UP":services_up} #met tout dans un dictionnaire
+                        print("")
+                        print("""
+                 /$$
+                | $$
+                | $$
+                | $$
+                |__/
 
- /$$
-| $$
-| $$
-| $$
-|__/
-    
- /$$
-|__/
+                /$$
+                |__/
 
-Configuration pre-enregistré. OPTION 5 pour Sauvegarder!""") #Une fois tous les paramètres ajoutée (faut qu'il le garde en mémoire pour qu'apres avec l'option 5 la config reste et si exit, demander si sauvegarde), idée: creer un deuxieme fichier json genre server_config_tmp)
-        
-    
+Configuration pre-enregistré...\nOPTION 5 --> 1 pour Sauvegarder!""") #Une fois tous les paramètres ajoutée (faut qu'il le garde en mémoire pour qu'apres avec l'option 5 la config reste et si exit, demander si sauvegarde), idée: creer un deuxieme fichier json genre server_config_tmp)
+                        break
+                except ValueError:
+                    break  
+        except ValueError:
+                    break  
     
     
     elif option == 2:
         print(modifier_une_conf)
         print("------------------------------------")
-        print("Liste des fichiers de configuration:")
+        print("Liste des fichiers de configuration\n(Pour voir les contenus de toutes les fichiers --> revenir au menu/opt 3)")
         print("------------------------------------")
+        print("")
+        
         json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
         for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
             print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de 
         
-        print("")
-        serv_amod = int(input("Choisir le numéro fichier de configuration qui vous voulez modifier: "))
-        print("")
-        print("-------------------------------")
-        print("Voici l'information du fichier:")
-        print("-------------------------------")
-        print("")
-        
-        serv_amod -= 1 #l’opérateur -= soustrait (dans ce cas 1) x quantité d'elements dans la liste indexée. Important plus tard quand il va afficher la liste de fichier dans le dossier de manière qu'il commence par 1
-        with open(json_files[serv_amod], 'r') as f: #ouvre le json_file dans la position choisi (serv_amod), cette fois en mode "r" read et le met dans la variable f
-            data = json.load(f) #Charge la variable "data" avec le contenu (tout ça fait la function json.load) du fichier antérieurement mis das la variable f.
-            print(f"Nom du fichier: {os.path.basename(json_files[serv_amod])}") #imprime le nom du fichier, pour ça utilise la fonctionnalité os.path.basename dans le fichier choisi
-            
-            #print(json.load(f)) #Un autre manier de le afficher
-            #data = json.load(f) #Un autre manier de le afficher
-            #pprint.pprint(data)
-            
-            print("")
-            for key, value in data.items(): #boucle qui va itérer dans le contenu (data) du dictionnaire
-                print(f"{key}: {value}") #Ici on le donne le format key: value pour qu'il soit lisible.
-            print("------------------------------")
-            print("")
-            print("Modification ligne par ligne: ")
-            print("------------------------------")
-            print("v")
-            print("v")
-            print("|")
-            print("|")
-            print("V")
-            data_mod = {}
-            for key, value in data.items(): #fait une boucle pour et passe par item de "data"
+        while True: #Ici j'ai mis une option supplémentaire pour pouvoir revenir au menu quand besoin. sinon faut changer l'input de serv_amod pour un str, et le transformer en int après.
+            try:
                 print("")
-                print(f"{key}: {value}") #imprime la ligne qui va être modifié
-                print("")                
-                user_input = input(f"Entrer une nouvelle valeur pour {key} (ou entrer pour conserver l'original): ") #charge la variable avec l'input de l'utilisateur. si pas d'input passe a la ligne suivante sans modifier l'actuel.
-                print("")
-                if user_input: #S'il y a eu un input
-                    data_mod[key] = user_input #on remplace la variable par l'input de l'utilisateur (que s'il a mis quelque chose)
-                else:
-                    data_mod[key] = value #sinon, on laisse la même valeur
-            print("")
-            print("""
-
- /$$
-| $$
-| $$
-| $$
-|__/
-    
- /$$
-|__/
-
-Modifications pre-enregistré. OPTION 5 --> 2 pour Sauvegarder!""")
-            print("")
-            print("oo---~---ooo----~~~----ooo----~~----ooo----~~~----ooo---~---oo")
+                continuer = input("Entrer pour continuer, 'r' pour revenir au menu precedent: ")
+                if continuer == 'r':
+                    break
                 
-                    #SI ON VEUT QUE çA SOIT SAUVEGARDé DIRECTEMENT PENDANT QU'ON MODIFIE
-                    #data[key] = user_input #on attribue la nouvel key a data automatiquement dans chaque tour de la boucle.
-                #with open(os.path.basename(json_files[serv_amod]), 'w') as f: #met le fichier choisi en mode write et le me dans la variable f.
-                    #json.dump(data, f, indent=4) #ici on garde data dans le fichier à modifier.
-                #print("Fichier modifié avec succès!")
+                if continuer == "":
+
+                    print("")
+                    serv_amod = int(input("Choisir le numéro fichier de configuration qui vous voulez modifier: "))
+                    print("")
+                    print("-------------------------------")
+                    print("Voici l'information du fichier:")
+                    print("-------------------------------")
+                    print("")
+                    
+                    serv_amod -= 1 #l’opérateur -= soustrait (dans ce cas 1) x quantité d'elements dans la liste indexée. Important plus tard quand il va afficher la liste de fichier dans le dossier de manière qu'il commence par 1
+                    with open(json_files[serv_amod], 'r') as f: #ouvre le json_file dans la position choisi (serv_amod), cette fois en mode "r" read et le met dans la variable f
+                        data = json.load(f) #Charge la variable "data" avec le contenu (tout ça fait la function json.load) du fichier antérieurement mis das la variable f.
+                        print(f"Nom du fichier: {os.path.basename(json_files[serv_amod])}") #imprime le nom du fichier, pour ça utilise la fonctionnalité os.path.basename dans le fichier choisi
+                        
+                        #print(json.load(f)) #Un autre manier de le afficher
+                        #data = json.load(f) #Un autre manier de le afficher
+                        #pprint.pprint(data)
+                        
+                        print("")
+                        for key, value in data.items(): #boucle qui va itérer dans le contenu (data) du dictionnaire
+                            print(f"{key}: {value}") #Ici on le donne le format key: value pour qu'il soit lisible.
+                        print("------------------------------")
+                        print("")
+                        print("Modification ligne par ligne: ")
+                        print("------------------------------")
+                        print("v")
+                        print("v")
+                        print("|")
+                        print("|")
+                        print("V")
+                        data_mod = {}
+                        for key, value in data.items(): #fait une boucle pour et passe par item de "data"
+                            print("")
+                            print(f"{key}: {value}") #imprime la ligne qui va être modifié
+                            print("")                
+                            user_input = input(f"Entrer une nouvelle valeur pour {key} (ou entrer pour conserver l'original): ") #charge la variable avec l'input de l'utilisateur. si pas d'input passe a la ligne suivante sans modifier l'actuel.
+                            print("")
+                            if user_input: #S'il y a eu un input
+                                data_mod[key] = user_input #on remplace la variable par l'input de l'utilisateur (que s'il a mis quelque chose)
+                            else:
+                                data_mod[key] = value #sinon, on laisse la même valeur
+                        print("")
+                        print("""
+                 /$$
+                | $$
+                | $$
+                | $$
+                |__/
+
+                /$$
+                |__/
+
+Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
+                        break
                             
-            
+                                #SI ON VEUT QUE çA SOIT SAUVEGARDé DIRECTEMENT PENDANT QU'ON MODIFIE
+                                #data[key] = user_input #on attribue la nouvel key a data automatiquement dans chaque tour de la boucle.
+                            #with open(os.path.basename(json_files[serv_amod]), 'w') as f: #met le fichier choisi en mode write et le me dans la variable f.
+                                #json.dump(data, f, indent=4) #ici on garde data dans le fichier à modifier.
+                            #print("Fichier modifié avec succès!")
+                            
+                else:
+                    print("Entrée invalide, réessayez...")
+                    continue
+            except ValueError:
+                print("Entrée invalide, réessayez...")
+                continue
             
 
     elif option == 3:
@@ -347,7 +370,7 @@ Modifications pre-enregistré. OPTION 5 --> 2 pour Sauvegarder!""")
                 option_5 = int(input("Entrez une option: "))
 
             except ValueError:
-                print("Entrez soit 1, soit2 ")
+                print("Entrez soit 1, 2 ou 3...")
                 continue
 
             if option_5 == 1:
@@ -372,7 +395,7 @@ Modifications pre-enregistré. OPTION 5 --> 2 pour Sauvegarder!""")
                 break
 
             else:
-                print("Entrez soit 1, soit 2, soit 3")
+                print("Entrez soit 1, 2 ou 3...")
 
             
         

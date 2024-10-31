@@ -106,3 +106,33 @@ Option eliminar
             elif confirmation == "n":
                 print("Fichier pas supprimé")
                 break
+
+
+Option 1
+        print(fichier_conf)
+        print("")
+        nom_ser = input("Entrez le nom du serveur : ") #enregistre le nom du serveur dans la variable nom_ser
+        
+        ip_ser = input("Entrez l'adresse IP : ") #enregistre l'IP dans la variable ip_ser. (faire un input valid)
+           
+        sys_exp = input("Entrez le système d'exploitation : ") #enregistre le système d’exploitation dans la variable sys_exp
+
+        services_up = [input("Entrez les services en cours d'exécution (séparés par des virgules) :")] #enregiste les services qui sont en cours d'exécution dans la liste services_up (faire invalid si mauvais format) 
+
+        server_config = {"Name":nom_ser, "Ip": ip_ser , "Systeme":sys_exp, "Services UP":services_up} #met tout dans un dictionnaire
+        print("")
+        print("""
+
+ /$$
+| $$
+| $$
+| $$
+|__/
+    
+ /$$
+|__/
+
+Configuration pre-enregistré. OPTION 5 pour Sauvegarder!""") #Une fois tous les paramètres ajoutée (faut qu'il le garde en mémoire pour qu'apres avec l'option 5 la config reste et si exit, demander si sauvegarde), idée: creer un deuxieme fichier json genre server_config_tmp)
+        
+    
+    
