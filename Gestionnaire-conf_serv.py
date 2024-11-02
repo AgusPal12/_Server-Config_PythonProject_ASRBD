@@ -117,42 +117,44 @@ selection_6 = """
 """
 
 def list_conf(): #Ici je define une function, car j'ai vais avoir besoin de la meme fonctionnalité pour l'option 6
+            
+    json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient d'effacer un fichier la function pour lister ne trouve pas le fichier. 
+    
+    print(Fore.CYAN + Style.BRIGHT + fichier_conf_liste + Style.RESET_ALL) 
+    
+    print("")
+    print("---------------------------------------------")
+    print("Voici toutes les configurations des serveurs:")
+    print("---------------------------------------------")
+    print("")
+    
 
-            print(Fore.CYAN + Style.BRIGHT + fichier_conf_liste + Style.RESET_ALL) 
-            json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient d'effacer un fichier la function pour lister ne trouve pas le fichier. 
+    #for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
+    #print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de 
+
+    for i, file in enumerate(json_files, start=1): #Ici j'ai récupéré le code de l'option 2 (pour énumérer les fichiers) et j'ai l’intégré à la function que faisait la boucle pour ouvrir chaque fichier et montrer son contenu. Voici l'ancienne function qui énumère pas le nom du fichier:
+    
+    
+        """
+    for file in json_files:
+        with open(os.path.join(dir_path, file), 'r') as f:
+            data = json.load(f)
             print("")
-            print("---------------------------------------------")
-            print("Voici toutes les configurations des serveurs:")
-            print("---------------------------------------------")
+            print("----------------------")
+            print(file)
             print("")
-            
+            for key, value in data.items(): #fait une boucle pour et passe par item de "data"
+                print(f"{key}: {value}")
+    """
 
-            #for i, element in enumerate(json_files, start=1): #position des elements dans la liste en commencent par 1 et non 0
-            #print(f"{i}. {element}") #imprime l'element i avec un string "." plus le numéro de 
-
-            for i, file in enumerate(json_files, start=1): #Ici j'ai récupéré le code de l'option 2 (pour énumérer les fichiers) et j'ai l’intégré à la function que faisait la boucle pour ouvrir chaque fichier et montrer son contenu. Voici l'ancienne function qui énumère pas le nom du fichier:
-            
-            
-                """
-            for file in json_files:
-                with open(os.path.join(dir_path, file), 'r') as f:
-                    data = json.load(f)
-                    print("")
-                    print("----------------------")
-                    print(file)
-                    print("")
-                    for key, value in data.items(): #fait une boucle pour et passe par item de "data"
-                        print(f"{key}: {value}")
-            """
-
-                print(f"{i}. {file}")
-                with open(os.path.join(dir_path, file), 'r') as f:
-                    data = json.load(f)
-                    print("")               
-                    for key, value in data.items(): #fait une boucle pour et passe par item de "data"
-                        print(f"{key}: {value}")
-                    print("")   
-                    print("----------------------")
+        print(f"{i}. {file}")
+        with open(os.path.join(dir_path, file), 'r') as f:
+            data = json.load(f)
+            print("")               
+            for key, value in data.items(): #fait une boucle pour et passe par item de "data"
+                print(f"{key}: {value}")
+            print("")   
+            print("----------------------")
             
 
 
@@ -162,7 +164,7 @@ print(Style.BRIGHT + Fore.BLUE + titre_server_config + Style.RESET_ALL)
 while True: #Va créer la boucle, pour revenir toujours sélectionner une option valide.
     try: #ici le try/except va nous créer le message d'error si l'option choisi est autre chose q'un int
         print(Style.BRIGHT + Fore.GREEN + Selection + Style.RESET_ALL)
-        option = int(input("Entrez votre sélection : "))
+        option = int(input(Back.BLUE + "Entrez votre sélection : " + Style.RESET_ALL))
         print("")
         print("--------------------------------")
 
@@ -177,7 +179,7 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
         print(Fore.CYAN + Style.BRIGHT + fichier_conf + Style.RESET_ALL)
         print("")
         try:
-            nom_ser = input("Entrez le nom du nouveau serveur\nou 'r' pour revenir au menu : ") #enregistre le nom du serveur dans la variable nom_ser
+            nom_ser = input(Fore.CYAN + "Entrez le nom du nouveau serveur\nou 'r' pour revenir au menu : ") #enregistre le nom du serveur dans la variable nom_ser
             while True:
                 try:
 
@@ -193,7 +195,7 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
 
                         server_config = {"Name":nom_ser, "Ip": ip_ser , "Systeme":sys_exp, "Services UP":services_up} #met tout dans un dictionnaire
                         print("")
-                        print("""
+                        print(Fore.RED + Style.BRIGHT + """
                  /$$
                 | $$
                 | $$
@@ -203,7 +205,7 @@ while True: #Va créer la boucle, pour revenir toujours sélectionner une option
                 /$$
                 |__/
 
-Configuration pre-enregistré...\nOPTION 5 --> 1 pour Sauvegarder!""") #Une fois tous les paramètres ajoutée (faut qu'il le garde en mémoire pour qu'apres avec l'option 5 la config reste et si exit, demander si sauvegarde), idée: creer un deuxieme fichier json genre server_config_tmp)
+Configuration pre-enregistré...\nOPTION 5 --> 1 pour Sauvegarder!""" + Style.RESET_ALL) #Une fois tous les paramètres ajoutée (faut qu'il le garde en mémoire pour qu'apres avec l'option 5 la config reste et si exit, demander si sauvegarde), idée: creer un deuxieme fichier json genre server_config_tmp)
                         break
                 except ValueError:
                     break  
@@ -225,14 +227,25 @@ Configuration pre-enregistré...\nOPTION 5 --> 1 pour Sauvegarder!""") #Une fois
         while True: #Ici j'ai mis une option supplémentaire pour pouvoir revenir au menu quand besoin. sinon faut changer l'input de serv_amod pour un str, et le transformer en int après.
             try:
                 print("")
-                continuer = input("Entrer pour continuer, 'r' pour revenir au menu precedent: ")
+                continuer = input(Fore.CYAN + "--'Entrer'-- pour continuer, 'r' pour revenir au menu precedent: ")
                 if continuer == 'r':
                     break
                 
                 if continuer == "":
+                    while True:
+                        try:
 
-                    print("")
-                    serv_amod = int(input("Choisir le numéro fichier de configuration qui vous voulez modifier: "))
+                            print("")
+                            serv_amod = int(input("Choisir le numéro fichier de configuration qui vous voulez modifier: " + Style.RESET_ALL))
+                            
+                            if 1 <= serv_amod <= len(json_files):
+                                break
+                            else:
+                                print(Fore.RED + Style.BRIGHT +  f"Entrée invalide. Seule un N° de Fichier de configuration, entre 1 et {len(json_files)}" + Style.RESET_ALL)
+                                continue
+                        except ValueError:
+                                print(Fore.RED + Style.BRIGHT +  f"Entrée invalide, juste numéros sont accepté.\nSeule un N° de Fichier de configuration, entre 1 et {len(json_files)}" + Style.RESET_ALL)
+
                     print("")
                     print("-------------------------------")
                     print("Voici l'information du fichier:")
@@ -255,24 +268,22 @@ Configuration pre-enregistré...\nOPTION 5 --> 1 pour Sauvegarder!""") #Une fois
                         print("")
                         print("Modification ligne par ligne: ")
                         print("------------------------------")
-                        print("v")
-                        print("v")
-                        print("|")
-                        print("|")
-                        print("V")
+                        print("")
                         data_mod = {}
-                        for key, value in data.items(): #fait une boucle pour et passe par item de "data"
-                            print("")
-                            print(f"{key}: {value}") #imprime la ligne qui va être modifié
+                        for key, value in data.items(): #fait une boucle pour et passe par item de "data"                            
+                            print(Fore.YELLOW + "")
+                            print("|")                        
+                            print("V")
+                            print(f"{key}: {value}" + Style.RESET_ALL) #imprime la ligne qui va être modifié
                             print("")                
-                            user_input = input(f"Entrer une nouvelle valeur pour {key} (ou entrer pour conserver l'original): ") #charge la variable avec l'input de l'utilisateur. si pas d'input passe a la ligne suivante sans modifier l'actuel.
+                            user_input = input(f"Entrer une nouvelle valeur pour {Fore.YELLOW + key + Style.RESET_ALL} (ou entrer pour conserver l'original): ") #charge la variable avec l'input de l'utilisateur. si pas d'input passe a la ligne suivante sans modifier l'actuel.
                             print("")
                             if user_input: #S'il y a eu un input
                                 data_mod[key] = user_input #on remplace la variable par l'input de l'utilisateur (que s'il a mis quelque chose)
                             else:
                                 data_mod[key] = value #sinon, on laisse la même valeur
                         print("")
-                        print("""
+                        print(Fore.RED + Style.BRIGHT + """
                  /$$
                 | $$
                 | $$
@@ -282,7 +293,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 1 pour Sauvegarder!""") #Une fois
                 /$$
                 |__/
 
-Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
+Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RESET_ALL)
                         break
                             
                                 #SI ON VEUT QUE çA SOIT SAUVEGARDé DIRECTEMENT PENDANT QU'ON MODIFIE
@@ -292,10 +303,10 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
                             #print("Fichier modifié avec succès!")
                             
                 else:
-                    print("Entrée invalide, réessayez...")
+                    print(Fore.RED + Style.BRIGHT + "Entrée invalide, réessayez..." + Style.RESET_ALL)
                     continue
             except ValueError:
-                print("Entrée invalide, réessayez...")
+                print(Fore.RED + Style.BRIGHT + "Entrée invalide, réessayez..." + Style.RESET_ALL)
                 continue
             
 
@@ -326,7 +337,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
         while True:
             
 
-            serv_asup = input("- Choisir le numéro de fichier à supprimer\n- 'r' pour revenir au menu\n--->: ")
+            serv_asup = input(Fore.CYAN + "- Choisir le numéro de fichier à supprimer\n- 'r' pour revenir au menu\n--->: " + Style.RESET_ALL)
 
             if serv_asup == 'r':
                 break
@@ -336,11 +347,11 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
                     serv_asup = int(serv_asup)
 
                 except ValueError:
-                    print("Entrée invalide, réessayez")
+                    print(Fore.RED + Style.BRIGHT + "Entrée invalide, réessayez" + Style.RESET_ALL)
                     continue
 
                 if not 1 <= serv_asup <= len(json_files): #ici on gère les entrées des l'utilisateur que sont plus grand que la quantité des fichiers, ou négatif 
-                    print("Erreur : les numéros de fichiers doivent être compris entre 1 et", len(json_files))
+                    print(Fore.RED + Style.BRIGHT + "Erreur! Les numéros de fichiers doivent être compris entre 1 et", len(json_files))
                     continue        
 
 
@@ -350,14 +361,14 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
                 print("")
                 print("-----------------------------------------------------------------------------------")
                 serv_asup -= 1 #l’opérateur -= soustrait (dans ce cas 1) x quantité d'elements dans la liste indexée. Important plus tard quand il va afficher la liste de fichier dans le dossier de manière qu'il commence par 1
-                confirmation = input(f"Nom du fichier: {os.path.basename(json_files[serv_asup])} à supprimer, Voulez vous supprimer le fichier o/n: ") #imprime le nom du fichier, pour ça utilise la fonctionnalité os.path.basename dans le fichier choisi
+                confirmation = input(Fore.CYAN + f"Nom du fichier: {os.path.basename(json_files[serv_asup])} à supprimer, Voulez vous supprimer le fichier o/n: " + Style.RESET_ALL) #imprime le nom du fichier, pour ça utilise la fonctionnalité os.path.basename dans le fichier choisi
                 while True:
                     if confirmation == "o":
                         os.remove(json_files[serv_asup])
-                        print("\nFichier supprimé avec succès!!\n\n")
+                        print(Fore.YELLOW + "\nFichier supprimé avec succès!!\n\n" + Style.RESET_ALL)
                         break
                     elif confirmation == "n":
-                        print("\n...Fichier pas supprimé...\n\n")
+                        print(Fore.YELLOW + "\n...Fichier pas supprimé...\n\n" + Style.RESET_ALL)
                         break
 
 
@@ -368,27 +379,27 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
 
         while True:
             try:
-                option_5 = int(input("Entrez une option: "))
+                option_5 = int(input(Fore.CYAN + "Entrez une option: " + Style.RESET_ALL))
 
             except ValueError:
-                print("Entrez soit 1, 2 ou 3...")
+                print(Fore.RED + Style.BRIGHT + "Error!...Entrez soit 1, 2 ou 3..." + Style.RESET_ALL)
                 continue
 
             if option_5 == 1:
 
-                Nom_fichier_conf = input("Entrez le nom du fichier de sauvegarde (suggestion: nom du serveur): ")
+                Nom_fichier_conf = input(Fore.CYAN + "Entrez le nom du fichier de sauvegarde (suggestion: nom du serveur): ")
                 Nom_fichier_conf_choisi = Nom_fichier_conf + ".json" 
                 with open(Nom_fichier_conf_choisi, 'w') as f: #crée le fichier.json et le met en mode write.
                     json.dump(server_config, f, indent=4) #dump: écris ajoute l'information dans le fichier, indent donne le forma pour qu'il soit lisible en json
                 
                 
-                print("Fichier sauvegardé avec succès!")
+                print(Fore.CYAN + "Fichier sauvegardé avec succès!" + Style.RESET_ALL)
                 print(selection_5)
 
             elif option_5 == 2:
                 with open(json_files[serv_amod], 'w') as f: #Prends le fichier sélectionné par l'utilisateur en option 2, le met dans Write mode et le met dans la variable f
                     json.dump(data_mod, f, indent=4) #prends la variable mod8data crée dans l'option 2 avec les modifications faites et le met dans le fichier dans le fichier avec le forma correct.
-                print("Fichier sauvegardé avec succès!")
+                print(Fore.CYAN + "Fichier sauvegardé avec succès!" + Style.RESET_ALL)
                 print("")
                 print(selection_5)
             
@@ -396,7 +407,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
                 break
 
             else:
-                print("Entrez soit 1, 2 ou 3...")
+                print(Fore.RED + Style.BRIGHT + "Error!...Entrez soit 1, 2 ou 3..." + Style.RESET_ALL)
 
             
         
@@ -468,16 +479,6 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""")
         json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')]
         list_conf() 
         print(restaurer_conf)
-
-        """def function_comparer_dossier():
-            scan_dossier_Points_de_Restauration = [s for s in os.(dir_path)]
-            dir_path2 = os.path.join(".\Points_de_Restauration", dossier_restaurer)
-            json_files2 = [f for f in os.listdir(dir_path2) if f.endswith('.json')]
-            
-            if set(json_file) == set(json_files2):
-                for fichier in list(set(json_files2) & set(json_files)):
-                    os.remove(os.path.join(dir_path, fichier))"""
-
         
         while True:
 

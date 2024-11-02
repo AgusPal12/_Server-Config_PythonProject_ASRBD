@@ -37,4 +37,7 @@ Mécanisme actuel: écrase les fichiers avec le même nom. Solution: Informer le
 Messages d'error et messages générales pas uniformes dans tout le code.
 Différents façons de parcourir les menus, mieux si c'est tout de la même façon.
 Pas d'optimisation, utiliser plus de functions().
+On ne peut pas modifier un fichier à la main, car si on n'a pas le bon format json (dictionnaire key value) la function list_conf() ne fonctionne plus.
 
+
+Finir de colorer et corriger les errors d'input a partir du 6
