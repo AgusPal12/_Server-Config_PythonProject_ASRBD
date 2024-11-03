@@ -32,12 +32,11 @@ Pour Option 6:
 	#Si Fichier spécifique, supprime fichier.
 	
 Notes amélioration:
-Mécanisme de sauvegarde qu'ont on crée un nouveau fichier conf pas pratique. car on dois aller ailleurs pour sauvegarder.
+
+Mécanisme de sauvegarde pas dans différents menus
 Mécanisme actuel: écrase les fichiers avec le même nom. Solution: Informer le quel son les fichiers qui va écraser, et donner a choisir si oui où non.
-Messages d'error et messages générales pas uniformes dans tout le code.
+Nom du serveur ne peut pas être 'r'. car c'est pour revenir au menu.
 Différents façons de parcourir les menus, mieux si c'est tout de la même façon.
 Pas d'optimisation, utiliser plus de functions().
 On ne peut pas modifier un fichier à la main, car si on n'a pas le bon format json (dictionnaire key value) la function list_conf() ne fonctionne plus.
-
-
-Finir de colorer et corriger les errors d'input a partir du 6
+Une fois qu'on s'engage dans une config, modif ou autres, on ne peut pas revenir en arrière 

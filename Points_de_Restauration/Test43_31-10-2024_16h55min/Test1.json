@@ -1,8 +1,0 @@
-{
-    "Name": "Test1",
-    "Ip": "123.123.123.123",
-    "Systeme": "alpina",
-    "Services UP": [
-        "TEST"
-    ]
-}

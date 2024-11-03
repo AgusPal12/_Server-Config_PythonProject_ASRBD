@@ -1,0 +1,8 @@
+{
+    "Name": "ServeurCISCO",
+    "Ip": "123.432.234.321",
+    "Systeme": "Debian",
+    "Services UP": [
+        "Apache"
+    ]
+}
