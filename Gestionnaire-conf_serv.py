@@ -272,7 +272,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 1 pour Sauvegarder!""" + Style.RE
                         print("\n-----------------------------")                        
                         print("Modification ligne par ligne: ")
                         print("-----------------------------")                        
-                        #data_mod = {}
+                        
                         for key, value in data.items(): #fait une boucle pour et passe par item de "data"                         
                             print(Fore.YELLOW + "|")                        
                             print("V")
@@ -281,7 +281,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 1 pour Sauvegarder!""" + Style.RE
                             user_input = input(f"Entrer une nouvelle valeur pour {Fore.YELLOW + key + Style.RESET_ALL} (ou entrer pour conserver l'original): ") #charge la variable avec l'input de l'utilisateur. si pas d'input passe a la ligne suivante sans modifier l'actuel.
                             print("")
                             if user_input: #S'il y a eu un input
-                                data_mod[key] = user_input #on remplace la variable par l'input de l'utilisateur (que s'il a mis quelque chose)
+                                data_mod[key] = user_input #on remplace le value par l'input de l'utilisateur (que s'il a mis quelque chose). Et on le met das un nouveau dictionnaire (data_mod) avec la nouvelle data. Pour après l'enregistrer avec l'option 5 dans le Fichier.
                             else:
                                 data_mod[key] = value #sinon, on laisse la même valeur
                         print("")
