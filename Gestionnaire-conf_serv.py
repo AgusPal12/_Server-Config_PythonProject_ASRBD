@@ -735,7 +735,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                 nm.scan(hosts=ip_range, arguments='-sV -p 1-1024') # -sV : scan et identifie la version de chaque service. -p scan les ports dans l'IP range.
 
                 # Afficher les résultat 
-                print("Analyse terminée...Résultats du scan:")
+                print(Fore.YELLOW + Style.BRIGHT + "Analyse terminée...Résultats du scan:" + Style.RESET_ALL)
                 print("")
                 for host in nm.all_hosts(): #nm.all_hosts() nous retourne une liste avec tous les hosts (ip address) qui Nmap a scanné.
                     print(f"Host: {host}") # Affiche chaque host et sa variable
