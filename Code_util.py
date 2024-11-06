@@ -59,7 +59,7 @@ print(Fore.YELLOW + Style.NORMAL + 'some normal yellow text')
                     
                         sys_exp = input("Entrez le système d'exploitation : ") #enregistre le système d’exploitation dans la variable sys_exp
 
-                        services_up = [input("Entrez les services en cours d'exécution (séparés par des virgules) :")] #enregiste les services qui sont en cours d'exécution dans la liste services_up (faire invalid si mauvais format) 
+                        services_up = [input("Entrez les services en cours d'exécution (séparés par des virgules) :")] #enregistre les services qui sont en cours d'exécution dans la liste services_up (faire invalid si mauvais format) 
 
                         server_config = {"Name":nom_ser, "Ip": ip_ser , "Systeme":sys_exp, "Services UP":services_up} #met tout dans un dictionnaire
                         print("")

@@ -709,26 +709,33 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                 print(Fore.RED + Style.BRIGHT + "Options possibles: 1,2,3 ou 4. Réessayez: " + Style.RESET_ALL)
     
     elif option == 7:
-        print(Fore.CYAN + Style.BRIGHT + scan_conf + Style.RESET_ALL) 
-        nm = nmap.PortScanner() # Crée un objet Nmap
-
-
-        print("")
-        ip_range = input("Entrez la plage d'adresses IP à scanner (ex : 192.168.1.1/24)\n- 'r' Pour revenir au menu : ") # Définie le  la porté de le scan IP  (e.g. 192.168.1.0/24)
-        print("")
-        print("-------------------------------------------------------------------------------")
-        print("")
+        
+        print(Fore.CYAN + Style.BRIGHT + scan_conf + Style.RESET_ALL)
+        
+        nm = nmap.PortScanner() # Démarre l'objet PortScanner
+        
         while True:
-            try:
+            
+            
 
-                if ip_range == 'r':
-                    break
-                else:
-                    continue
-                nm.scan(hosts=ip_range, arguments='-sV -p 1-1024') # -sV : scan et identifie la version de chaque service. Scan the IP range
+
+            print("")
+            ip_range = input(Fore.CYAN + "Entrez la plage d'adresses IP à scanner (ex : 192.168.1.1/24)\n- 'r' Pour revenir au menu : ") # Définie le  la porté de le scan IP  (e.g. 192.168.1.0/24)
+            print("")
+            print("-------------------------------------------------------------------------------" + Style.RESET_ALL)
+            print("")
+    
+
+            if ip_range == 'r':
+                break
+                
+                
+            try:
+                
+                nm.scan(hosts=ip_range, arguments='-sV -p 1-1024') # -sV : scan et identifie la version de chaque service. -p scan les ports dans l'IP range.
 
                 # Afficher les résultat 
-                print("Résultats du scan:")
+                print("Analyse terminée...Résultats du scan:")
                 print("")
                 for host in nm.all_hosts(): #nm.all_hosts() nous retourne une liste avec tous les hosts (ip address) qui Nmap a scanné.
                     print(f"Host: {host}") # Affiche chaque host et sa variable
