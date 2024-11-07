@@ -1,8 +1,0 @@
-{
-    "Name": "ServeurCISCO",
-    "Ip": "123.432.234.321",
-    "Systeme": "Alpina",
-    "Services UP": [
-        "Apache"
-    ]
-}

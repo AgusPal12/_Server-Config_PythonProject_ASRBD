@@ -33,10 +33,11 @@ Pour Option 6:
 	
 Notes amélioration:
 
-Mécanisme de sauvegarde pas dans différents menus
+Mécanisme de sauvegarde dans différents menus
 Mécanisme actuel: écrase les fichiers avec le même nom. Solution: Informer le quel son les fichiers qui va écraser, et donner a choisir si oui où non.
 Nom du serveur ne peut pas être 'r'. car c'est pour revenir au menu.
 Aide à l'utilisateur, --HELP , exemples, etc.
+Visualiser la variable avant la sauvegarder.
 Pas d'optimisation, utiliser plus de functions().
 On ne peut pas modifier un fichier à la main, car si on n'a pas le bon format json (dictionnaire key value) la function list_conf() ne fonctionne plus.
 Une fois qu'on s'engage dans une config, modif ou autres, on ne peut pas revenir en arrière 

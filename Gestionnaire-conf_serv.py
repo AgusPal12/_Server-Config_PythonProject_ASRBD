@@ -4,6 +4,7 @@ import pprint
 import nmap
 import shutil
 import glob
+
 from colorama import Fore, Back, Style, init
 
 init()
@@ -408,6 +409,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                             
     
                     print(Style.BRIGHT + Fore.GREEN + "Fichier sauvegardé avec succès!" + Style.RESET_ALL)
+                    
                     print(selection_5)
                     
                     
@@ -446,16 +448,16 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
             for root, dirs, files in os.walk(path_dossier): #boucle qu'envoi trois valeurs, (ici j'ai choisi root, dirs et files, mais ça peut être nommé à volonté. la fonctionnalité os.walk attends toujours 3 variables): root (le chemin actuel), dirs (une liste de répertoires dans le chemin actuel) et files (une liste de fichiers dans le chemin actuel)
                 if root != path_dossier: #ici on met la condition que seulement soit imprime le compteur si le dossier est different au dossier racine, sinon on obtiens au haut de la liste "0. Points_de_Restauration:" et n'est pas nécessaire.
                     count += 1 #si el if precedent est true on incrémente de 1 à chaque tour de la boucle.
-                    print("______________________________") #améliore la lisibilité.
+                    print(Fore.CYAN + "______________________________") #améliore la lisibilité.
                     print("")
-                    print(f"{count}. {os.path.basename(root)}:") #affiche le N° du compteur un "."" et le nom de repertoire sans le path avec la function os.path.basename. et ":" à la fin.
+                    print(f"{count}. {os.path.basename(root)}:" + Style.RESET_ALL) #affiche le N° du compteur un "."" et le nom de repertoire sans le path avec la function os.path.basename. et ":" à la fin.
                     print("")
                     for file in files:
                         print(f"    - {file}: ") #va faire la boucle à l’intérieur de chaque sub-dossier et imprimer les fichiers (on mets des espaces pour que soit plus lisible).
                         
                         if file.endswith(".txt"):  # Verifie si c'est un .txt
                             with open(os.path.join(root, file), "r") as f: #ouvre le fichier .txt
-                                print (f"               `----> {f.read()}") #l'affiche et améliore la lisibilité.
+                                print (Fore.YELLOW + f"               `----> {f.read()}" + Style.RESET_ALL) #l'affiche et améliore la lisibilité.
                                 print("")
                         
                         if file.endswith(".json"):
@@ -469,13 +471,13 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                             print("")   
                             
             
-            subfolders = [f for f in os.listdir(path_dossier) if os.path.isdir(os.path.join(path_dossier, f))] #liste avec tous les sub-dossier pour les sélectionner dans l’option2
+            subfolders = [f for f in os.listdir(path_dossier) if os.path.isdir(os.path.join(path_dossier, f))] #liste avec tous les sub-dossier pour les sélectionner dans l’option2. Utilise la liste des fichier et dossier dans './Points_de_Restauration' : [os.listdir(path_dossier)] et vérifie si la conjunction (os.path.join(path_dossier, f) c'est un dossier et le mets dans la 
             
             return subfolders, path_dossier
                 
             
 
-        def function_nvo_dossier(): #Function que crée un nouveau dossier à l’intérieur du dossier "points de restorations"
+        def fonction_nvo_dossier(): #Function qui crée un nouveau dossier à l’intérieur du dossier "points de restorations"
                      
                     nom_sauvegarde = input(Fore.CYAN + "\n------------------------------------------\nEntrer un nom pour le point de sauvegarde: ")
                     
@@ -532,7 +534,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                                                        
                         if fichier_conf_rest == "all":
                             
-                            dossier_path1 = function_nvo_dossier() #charge la variable avec le contenu crée par function_nvo_dossier() pour être utilisé dans la boucle suivante et aussi lance la function_nvo_dossier()
+                            dossier_path1 = fonction_nvo_dossier() #charge la variable avec le contenu crée par fonction_nvo_dossier() pour être utilisé dans la boucle suivante et aussi lance la fonction_nvo_dossier()
                                                     
                             for fichier in json_files:
                                 shutil.copy(os.path.join(dir_path, fichier), os.path.join(dossier_path1, fichier)) #Fonctionnalité shutil pour copier coller et os.path.join pour lier le path au nim du fichier.
@@ -543,7 +545,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
 
                             
                             try:
-                                fichier_conf_rest = [int(x) for x in fichier_conf_rest.split(',')] #Prends les entrées de l'utilisateur, et si sont entiers, séparés par , va a couper dans la , et metre les int dans une liste.
+                                fichier_conf_rest = [int(x) for x in fichier_conf_rest.split(',')] #Prends les entrées de l'utilisateur, et si sont entiers, séparés par , va a couper dans le ',' et metre les int dans une liste.
                             except ValueError:
                                 print(Fore.RED + Style.BRIGHT + "Erreur! Les valeurs doivent être des entiers." + Style.RESET_ALL) 
                                 continue
@@ -551,11 +553,11 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                                 print(Fore.RED + Style.BRIGHT + f"Erreur! Les numéros de fichiers doivent être compris entre 1 et {len(json_files)}" + Style.RESET_ALL)
                                 continue 
 
-                            dossier_path2 = function_nvo_dossier() #charge la variable avec le path de mon nouveau dossier crée par function_nvo_dossier() 
+                            dossier_path2 = fonction_nvo_dossier() #charge la variable avec le path de mon nouveau dossier crée par fonction_nvo_dossier() 
 
-                            for fichiers_rest_choisi in fichier_conf_rest:
+                            for fichiers_rest_choisi in fichier_conf_rest: #Fonction qui va itérer dans la liste de numéros choisies dans fichier_conf_rest pour copier les fichiers qui corresponde au différents position dans la liste json_files. 
                                 fichier_path = os.path.join(dir_path, json_files[fichiers_rest_choisi - 1])                  
-                                shutil.copy(fichier_path, dossier_path2)
+                                shutil.copy(fichier_path, dossier_path2) #shutil copie du fichier_path vers dossier_path2.
                             
                                 
                    
@@ -573,7 +575,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                                 print(Fore.RED + Style.BRIGHT + f"Erreur! Le numéro de fichier doive être compris entre 1 et {len(json_files)}" + Style.RESET_ALL)
                                 continue
 
-                            dossier_path3 = function_nvo_dossier()
+                            dossier_path3 = fonction_nvo_dossier()
 
                             fichier_path = os.path.join(dir_path, json_files[fichier_conf_rest - 1])
                             shutil.copy(fichier_path, dossier_path3)
@@ -602,7 +604,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
 
                     try:
                         print("")
-                        selection_point_a_restaurer = input(Fore.CYAN + "Entrez le N° de point de restauration à restaurer\n(si les fichiers existent ils seront écrasé)\n- 'r' Pour retourner au menu precedent : " + Style.RESET_ALL)
+                        selection_point_a_restaurer = input(Fore.CYAN + "---'r' Pour retourner au menu precedent ---" + Style.RESET_ALL + Fore.YELLOW + "\n!!SI LES FICHIERS EXISTENT ET ONT LE MÊME NOM ILS SERONT ÉCRASÉ!!" + Style.RESET_ALL + Fore.CYAN + "\nEntrez le N° de point de restauration à restaurer : " + Style.RESET_ALL)
                         
                         if selection_point_a_restaurer == 'r': 
                             break
