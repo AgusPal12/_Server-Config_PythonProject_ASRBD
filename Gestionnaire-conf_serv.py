@@ -321,7 +321,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
     elif option == 4:
         json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #on charge la variable à nouveau, sinon quand on revient de créer un fichier la function pour supprimer ne trouve pas le fichier. 
         print(Fore.CYAN + Style.BRIGHT + supprimer_conf + Style.RESET_ALL) 
-        print("""
+        print(Fore.BLUE + """
 ---------######---------
 ----################----
 ------------------------
@@ -331,7 +331,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
 ------##-##--##-##------
 ------##-##--##-##------
 ------############------
-""")       
+""" + Style.RESET_ALL)       
     
         
         print("")
@@ -364,16 +364,17 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
              
                 print("")
                 print("")
-                print(Fore.CYAN + "----------------------------------------------------------------------------------------" + Style.RESET_ALL)
-                confirmation = input(Fore.CYAN + f"Nom du fichier: {os.path.basename(json_files[serv_asup - 1])} à supprimer, Voulez vous supprimer le fichier o/n: " + Style.RESET_ALL) #imprime le nom du fichier, pour ça utilise la fonctionnalité os.path.basename dans le fichier choisi
+                print(Fore.CYAN + "----------------------------------------------------------------------------------------")
+                
+                confirmation = input(f"{Fore.CYAN}Nom du fichier: {Fore.YELLOW + os.path.basename(json_files[serv_asup - 1]) + Style.RESET_ALL} {Fore.CYAN}à supprimer, Voulez vous supprimer le fichier o/n: ")  #imprime le nom du fichier, pour ça utilise la fonctionnalité os.path.basename dans le fichier choisi
+                
                 while True:
                     if confirmation == "o":
                         os.remove(json_files[serv_asup - 1])
                         print(Style.BRIGHT + Fore.GREEN + "\nFichier supprimé avec succès!!\n\n" + Style.RESET_ALL)                                               
                         break
                     if confirmation == "n":
-                        print(Fore.YELLOW + "\n...Fichier pas supprimé...\n\n" + Style.RESET_ALL)
-                        list_conf()
+                        print(Fore.YELLOW + "\n...Fichier pas supprimé...\n\n" + Style.RESET_ALL)                        
                         break
 
                     else:

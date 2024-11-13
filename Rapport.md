@@ -2,7 +2,7 @@
 
 "Server Config" c'est un logiciel qui nous permet de manipuler des configuration des serveurs. Les configuration ont un format JSON, une par fichier, et contiens un dictionnaire avec les clés: {Nom su serveur: , adresse IP: , système d'exploitation: , services en cours d'exécution: }.
 On peut les créer, modifier, visualiser, supprimer, sauvegarder, les restorer. En plus Server Config nous permets de scanner une plage d'address IP à la recherche des services et des serveurs à l'aide du NMAP.
-Tout dans une interface accessible à tout utilisateur.
+Tout dans une interface accessible à tout utilisateur et executable de façon autonome pour Windows et Linux.
 
 ## Les fonctionnalités:
  
@@ -21,6 +21,7 @@ Ou on va pre-remplir les informations du fichier de configuration.
 
   - Et en fin Scanner les serveurs à l'aide de NMAP : On donne une IP ou une plage d'IPs et on obtiens le host avec les ports ouverts, protocol, services actives et leurs version.
 
+  
 
   ## Les différents choix techniques qu'on été implémentée sont:
 
@@ -37,6 +38,8 @@ Ou on va pre-remplir les informations du fichier de configuration.
    - Gestion des erreurs et débogage : Gestion des erreurs de saisie par advertisement et d'information manquante si besoin.
 
   ## Spécificités du "SERVER CONFIG" :
+
+   - Executable pour Windows et Linux : Va s'executer dans le dossier où il se trouve. Les dépendances pour Linux sont : Les fichier .sh et le fichier .desktop
   
    - Au moment d'ajouter ou modifier une configuration, cette information est stocké provisoirement dans une variable. La sauvegarde sera effective une fois les changement seront enregistré avec l'option de sauvegarde (Option 5). On a fait ce choix pour donner à l'utilisateur une marge d'erreur, sinon il perdra la possibilité de retraction une fois engagé a la creation ou a la modification. Un advertisement est déclenché si l'utilisateur veut enregistrer et n'a pas encore crée ou modifié un fichier.
 
@@ -63,7 +66,7 @@ Ou on va pre-remplir les informations du fichier de configuration.
    
 
   
-## Quelques es soucis rencontrés:
+## Quelques soucis rencontrés:
 
   - Mise au jour de la variable json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] . Quand on efface, modifie ou crée un fichier, si cette variable n'est pas mis au jour ça nous provoque des erreurs.
 
@@ -81,6 +84,8 @@ Ou on va pre-remplir les informations du fichier de configuration.
 
   - Manque du "nm = nmap.PortScanner()" au debut de l'option 7, autrement NMAP n'arrive pas a démarrer.
 
+  - Pour lancer l'application depuis une clé USB en Linux il faut faire une demarche des permissions avant de monter la clé.
+
 
 ## Axes d’amélioration  
 
@@ -90,12 +95,14 @@ Ou on va pre-remplir les informations du fichier de configuration.
  - Mécanisme actuel de restauration écrase les fichiers avec le même nom. Solution: Informer le quel son les fichiers qui va écraser, et donner a choisir si oui ou non pour ces fichier et copier coller le rest.
  - Nom du serveur ne peut pas être 'r'. car c'est pour revenir au menu. Donc Modifier la façon de se déplacer dans le menus.
  - Aide à l'utilisateur, --HELP , exemples, etc. Option "Manuel d'utilisation".
- - Dans l'option 5, visualiser la variable avant la sauvegarder.
+ - Dans l'option 5, visualiser la variable avant la sauvegarder. (pour l'instant il faut que l'utilisateur se déplace vers le haut pour voir ce qu'il a crée).
  - Pas d'optimisation, utiliser plus de functions() pour que le code soit scalable et plus facile à modifier.
- - On ne peut pas modifier un fichier à la main, car si on n'a pas le bon format json (dictionnaire key value) la function list_conf() ne fonctionne plus. Donc le dossier où se trouve le logiciel ne peut contenir que des fichiers json avec un bon forma.
+ - On ne peut pas modifier un fichier à la main, car si on n'a pas le bon format json (dictionnaire key value) la function list_conf() ne fonctionne plus. Donc le dossier où se trouve le logiciel ne peut contenir que des fichiers json avec un bon format.
  - Une fois qu'on s'engage dans une config, modif ou autres, on ne peut pas revenir en arrière. Car pas d'option dans le menu. Intégrer un raccourci clavier serait une solution.  
  - Trier les fichiers par date de creation avec "sort".
  - Dans l'option 5, montrer le fichier q'on va sauvegarder avant de le faire.
+ - Verifier si le fichier est crée correctement. Verifier l’intégrité des fichier (car si modifié manuellement il y a risque de crash).
+ - Verifier si nom du Nouveau fichier crée existe déjà, et soit donner un advertisement, soit ajouter un N° 2 a la fin et informer. Pour l'instance ça écrase le fichier existent si même nom.
 
 
 

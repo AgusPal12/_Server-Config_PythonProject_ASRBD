@@ -37,3 +37,24 @@ print(Fore.RED + Style.BRIGHT + 'some bright red text')
 print(Fore.GREEN + Style.DIM + 'some dim green text')
 print(Fore.YELLOW + Style.NORMAL + 'some normal yellow text')
 
+
+# Code pour ajouter au debut pour bien effectuer une fichier d'execution avec pyinstaller: 
+
+import sys
+
+# Determine base directory dynamically
+if getattr(sys, 'frozen', False):
+     # Running as an executable
+    base_dir = os.path.dirname(sys.executable)
+else:
+        # Running as a script
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+# Define main directories relative to base_dir
+dir_path = base_dir
+path_dossier = os.path.join(base_dir, "Points_de_Restauration")
+
+# Ensure the Points_de_Restauration directory exists
+os.makedirs(path_dossier, exist_ok=True)
+
+
+Et aussi reemplacer le "." para la variable "dir_path" tans tout le code.
