@@ -1,0 +1,8 @@
+{
+    "Name": "rate",
+    "Ip": "rate",
+    "Systeme": "rate",
+    "Services UP": [
+        "rate"
+    ]
+}

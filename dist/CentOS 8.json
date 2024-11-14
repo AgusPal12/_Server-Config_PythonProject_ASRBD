@@ -1,0 +1,8 @@
+{
+    "Name": "Orion-DB01",
+    "Ip": " 192.168.201.142",
+    "Systeme": "CentOS 8",
+    "Services UP": [
+        "MySQL"
+    ]
+}
