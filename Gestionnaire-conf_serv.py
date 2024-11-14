@@ -372,7 +372,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                     continue
 
                 if not 1 <= serv_asup <= len(json_files): #ici on gère les entrées des l'utilisateur que sont plus grand que la quantité des fichiers, ou négatif 
-                    print(Fore.RED + Style.BRIGHT + "Erreur! Les numéros de fichiers doivent être compris entre 1 et", len(json_files))
+                    print(Fore.RED + Style.BRIGHT + "Erreur! Les numéros de fichiers doivent être compris entre 1 et ", len(json_files))
                     continue        
 
 
@@ -470,6 +470,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                     print(f"{count}. {os.path.basename(root)}:" + Style.RESET_ALL) #affiche le N° du compteur un "."" et le nom de repertoire sans le path avec la function os.path.basename. et ":" à la fin.
                     print("")
                     for file in files:
+    
                         print(f"    - {file}: ") #va faire la boucle à l’intérieur de chaque sub-dossier et imprimer les fichiers (on mets des espaces pour que soit plus lisible).
                         
                         if file.endswith(".txt"):  # Verifie si c'est un .txt
@@ -489,8 +490,8 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                             
             
             subfolders = [f for f in os.listdir(path_dossier) if os.path.isdir(os.path.join(path_dossier, f))] #liste avec tous les sub-dossier pour les sélectionner dans l’option2. Utilise la liste des fichier et dossier dans './Points_de_Restauration' : [os.listdir(path_dossier)] et vérifie si la conjunction (os.path.join(path_dossier, f) c'est un dossier et le mets dans la 
-            
-            return subfolders, path_dossier
+            ordonne_subfolders = sorted(subfolders) #Ordonne la liste pour améliorer la lisibilité.
+            return ordonne_subfolders, path_dossier
                 
             
 
@@ -507,7 +508,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                     
 
                     commentaire = input("---------------------------------------------------\nEntrer un commentaire pour le point de restauration: " + Style.RESET_ALL)
-                    with open(os.path.join(dossier_sauvegarde, 'Commentaire.txt'), "w") as f:  #ici aussi, on dois utiliser "os.path.join" pour bien formater mon path pour pouvoir créer mon fichier commentaire.txt
+                    with open(os.path.join(dossier_sauvegarde, '- Commentaire.txt'), "w") as f:  #ici aussi, on dois utiliser "os.path.join" pour bien formater mon path pour pouvoir créer mon fichier commentaire.txt
                         f.write(commentaire) # Ici écris le commentaire dans le fichier .txt
                     print("")
                     print(Style.BRIGHT + Fore.GREEN + "\nPoint de restauration enregistrée avec succès!\n\n" + Style.RESET_ALL)
@@ -614,26 +615,26 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                 print("")
                 
                 
-                subfolders, path_dossier = list_dossier_restauration() #ici je défini les variable qui va contenir ma liste de sub_dossiers qui se trouve en list_dossier_restauration() et aussi la va afficher.
+                ordonne_subfolders, path_dossier = list_dossier_restauration() #ici je défini les variable qui va contenir ma liste de sub_dossiers qui se trouve en list_dossier_restauration() et aussi la va afficher.
                 
                               
                 while True:
 
                     try:
                         print("")
-                        selection_point_a_restaurer = input(Fore.CYAN + "---'r' Pour retourner au menu precedent ---" + Style.RESET_ALL + Fore.YELLOW + "\n!!SI LES FICHIERS EXISTENT ET ONT LE MÊME NOM ILS SERONT ÉCRASÉ!!" + Style.RESET_ALL + Fore.CYAN + "\nEntrez le N° de point de restauration à restaurer : " + Style.RESET_ALL)
+                        selection_point_a_restaurer = input(Fore.CYAN + "--->  'r' Pour retourner au menu precedent   <---" + Style.RESET_ALL + Fore.YELLOW + "\n!!SI LES FICHIERS EXISTENT ET ONT LE MÊME NOM ILS SERONT ÉCRASÉ!!" + Style.RESET_ALL + Fore.CYAN + "\nEntrez le N° de point de restauration à restaurer : " + Style.RESET_ALL)
                         
                         if selection_point_a_restaurer == 'r': 
                             break
                         
                         selection_point_a_restaurer = int(selection_point_a_restaurer) #on transforme le str en int
                         
-                        if 1 <= selection_point_a_restaurer <= len(subfolders):
+                        if 1 <= selection_point_a_restaurer <= len(ordonne_subfolders):
 
                              
 
                         
-                            dossier_pdr_cible = subfolders[selection_point_a_restaurer - 1] #on établie la position dans la liste pour identifier le dossier à restaurer.
+                            dossier_pdr_cible = ordonne_subfolders[selection_point_a_restaurer - 1] #on établie la position dans la liste pour identifier le dossier à restaurer.
                         
 
                             json_files_in_pdr_src = glob.glob(os.path.join(path_dossier, dossier_pdr_cible, '*.json')) # Trouver tous les fichiers JSON à l’intérieur du dossier_pdr_cible
@@ -646,7 +647,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                             list_conf()
                         
                         else:
-                            print(Fore.RED + Style.BRIGHT + f"Erreur : le numéro de fichier doive être compris entre 1 et {len(subfolders)}" + Style.RESET_ALL) 
+                            print(Fore.RED + Style.BRIGHT + f"Erreur : le numéro de fichier doive être compris entre 1 et {len(ordonne_subfolders)}" + Style.RESET_ALL) 
                             continue
                         
 
@@ -668,7 +669,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                 print("")
                 
                 
-                subfolders, path_dossier = list_dossier_restauration() #ici je défini les variable qui va contenir ma liste de sub_dossiers qui se trouve en list_dossier_restauration() et aussi la va afficher.
+                ordonne_subfolders, path_dossier = list_dossier_restauration() #ici je défini les variable qui va contenir ma liste de sub_dossiers qui se trouve en list_dossier_restauration() et aussi la va afficher.
                     
                 
                 while True:
@@ -685,25 +686,25 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                         
                         selection_point_a_restaurer = int(selection_point_a_restaurer) #on transforme le str en int 
                         
-                        if not 1 <= selection_point_a_restaurer <= len(subfolders):
-                            print(Fore.RED + Style.BRIGHT + f"Erreur! Le numéro de fichier doive être compris entre 1 et{len(subfolders)}" + Style.RESET_ALL)
+                        if not 1 <= selection_point_a_restaurer <= len(ordonne_subfolders):
+                            print(Fore.RED + Style.BRIGHT + f"Erreur! Le numéro de fichier doive être compris entre 1 et {len(ordonne_subfolders)}" + Style.RESET_ALL)
                             continue
                         
                         while True:
                             try:
-                                confirmation = input(Fore.YELLOW + f"-----------------------------------------------------------------------------------------------------------------------\nNom du Point de restauration à supprimer: {subfolders[selection_point_a_restaurer - 1]}, Voulez vous supprimer le fichier o/n: " + Style.RESET_ALL )
+                                confirmation = input(Fore.YELLOW + f"-----------------------------------------------------------------------------------------------------------------------\nNom du Point de restauration à supprimer: {Fore.RED + ordonne_subfolders[selection_point_a_restaurer - 1] + Style.RESET_ALL} {Fore.YELLOW}, Voulez vous supprimer le fichier o/n: " + Style.RESET_ALL )
                                 if confirmation == 'o':
-                                    dossier_pdr_cible = subfolders[selection_point_a_restaurer - 1] #on établie la position dans la liste pour identifier le dossier à supprimer.
+                                    dossier_pdr_cible = ordonne_subfolders[selection_point_a_restaurer - 1] #on établie la position dans la liste pour identifier le dossier à supprimer.
                         
                                     shutil.rmtree(os.path.join(path_dossier, dossier_pdr_cible))#Supprime le dossier
                                             
                                     print(Style.BRIGHT + Fore.GREEN +"\n!!!!!!!!!!!!!!!!!!!\n Suppression réussi\n!!!!!!!!!!!!!!!!!!!" + Style.RESET_ALL)
-                                    subfolders, path_dossier = list_dossier_restauration()                                   
+                                    ordonne_subfolders, path_dossier = list_dossier_restauration()                                   
                                     break
                                     
                                 elif confirmation == 'n':
-                                    print(Fore.CYAN + "Dossier pas supprimé..." + Style.RESET_ALL)
-                                    subfolders, path_dossier = list_dossier_restauration()
+                                    print(Style.BRIGHT + Fore.GREEN +"Dossier pas supprimé..." + Style.RESET_ALL)
+                                    ordonne_subfolders, path_dossier = list_dossier_restauration()
                                     break
                                 else:
                                     print(Fore.RED + Style.BRIGHT + "Reponse possibles: 'o' or 'n'...réessayez" + Style.RESET_ALL)

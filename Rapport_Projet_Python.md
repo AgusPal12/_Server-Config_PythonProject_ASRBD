@@ -95,5 +95,5 @@ Tout cela dans une interface accessible à tout utilisateur et exécutable de fa
  - Trier les fichiers par date de création avec "sort".
  - Vérifier si le fichier est créé correctement. Vérifier l’intégrité des fichiers (car si modifié manuellement, il y a risque de crash).
  - Vérifier si le nom du nouveau fichier créé existe déjà, et soit donner un avertissement, soit ajouter un N° 2 à la fin et informer. Pour l'instant, cela écrase le fichier existant si même nom.
-
-
+ - Vider les variables "nouveau fichier" et "modification du fichier" une fois utilisé. 
+ - un nom de fichier ne peut pas être modifié, faut l’éliminer et le re-créer.

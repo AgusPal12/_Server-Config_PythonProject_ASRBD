@@ -145,17 +145,24 @@
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\DLLs\\libffi-8.dll',
    'BINARY'),
-  ('Points_de_Restauration\\Area51_30-10-2024_17h38min\\Commentaire.txt',
+  ('Points_de_Restauration\\Area51_30-10-2024_17h38min\\- Commentaire.txt',
    'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
-   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Area51_30-10-2024_17h38min\\Commentaire.txt',
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Area51_30-10-2024_17h38min\\- '
+   'Commentaire.txt',
+   'DATA'),
+  ('Points_de_Restauration\\Area51_30-10-2024_17h38min\\Serveur-X copy.json',
+   'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Area51_30-10-2024_17h38min\\Serveur-X '
+   'copy.json',
    'DATA'),
   ('Points_de_Restauration\\Area51_30-10-2024_17h38min\\Serveur-X.json',
    'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
    '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Area51_30-10-2024_17h38min\\Serveur-X.json',
    'DATA'),
-  ('Points_de_Restauration\\Backup86_06-11-2024_16h50min\\Commentaire.txt',
+  ('Points_de_Restauration\\Backup86_06-11-2024_16h50min\\- Commentaire.txt',
    'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
-   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Backup86_06-11-2024_16h50min\\Commentaire.txt',
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Backup86_06-11-2024_16h50min\\- '
+   'Commentaire.txt',
    'DATA'),
   ('Points_de_Restauration\\Backup86_06-11-2024_16h50min\\NOUveauTEST.json',
    'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
@@ -173,9 +180,41 @@
    'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
    '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Backup86_06-11-2024_16h50min\\Test.json',
    'DATA'),
-  ('Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\Commentaire.txt',
+  ('Points_de_Restauration\\Backup86_14-11-2024_20h01min\\- Commentaire.txt',
    'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
-   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\Commentaire.txt',
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Backup86_14-11-2024_20h01min\\- '
+   'Commentaire.txt',
+   'DATA'),
+  ('Points_de_Restauration\\Backup86_14-11-2024_20h01min\\Apollo-WebSrv01.json',
+   'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Backup86_14-11-2024_20h01min\\Apollo-WebSrv01.json',
+   'DATA'),
+  ('Points_de_Restauration\\Backup86_14-11-2024_20h01min\\CentOS 8.json',
+   'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Backup86_14-11-2024_20h01min\\CentOS '
+   '8.json',
+   'DATA'),
+  ('Points_de_Restauration\\Backup86_14-11-2024_20h01min\\Debian11.json',
+   'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Backup86_14-11-2024_20h01min\\Debian11.json',
+   'DATA'),
+  ('Points_de_Restauration\\Backup86_14-11-2024_20h01min\\Fedora Server '
+   '37.json',
+   'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Backup86_14-11-2024_20h01min\\Fedora '
+   'Server 37.json',
+   'DATA'),
+  ('Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\- '
+   'Commentaire.txt',
+   'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\- '
+   'Commentaire.txt',
+   'DATA'),
+  ('Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\-Serveur-X '
+   'copy.json',
+   'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
+   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\-Serveur-X '
+   'copy.json',
    'DATA'),
   ('Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\NOUveauTEST '
    'copy.json',
@@ -217,12 +256,6 @@
    '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\Serveur-X '
    'copy 6.json',
    'DATA'),
-  ('Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\Serveur-X '
-   'copy.json',
-   'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
-   '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\Serveur-X '
-   'copy.json',
-   'DATA'),
   ('Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\Serveur-X.json',
    'C:\\Users\\agust\\OneDrive\\Escritorio\\Agustin '
    '1.0\\Francia1\\Emploi\\EPSI\\EPSI_Bac\\EPSI-BAC3-ASRBD-Python\\ASRBD_PYTHON_YP\\Points_de_Restauration\\Beaucoup_des_confs_03-11-2024_19h40min\\Serveur-X.json',
@@ -248,7 +281,7 @@
  [],
  False,
  False,
- 1731610126,
+ 1731614637,
  [('run.exe',
    'C:\\Users\\agust\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python311\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\run.exe',
    'EXECUTABLE')],
