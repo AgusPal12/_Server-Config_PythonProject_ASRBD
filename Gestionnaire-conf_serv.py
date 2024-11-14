@@ -4,12 +4,28 @@ import pprint
 import nmap
 import shutil
 import glob
-
+import sys
 from colorama import Fore, Back, Style, init
-
 init()
 
-dir_path = '.' #variable pour stocker le repertoire où la ligne suivante va chercher les fichier .json
+
+# Vérifie de quel façon l'executable est exécutée
+if getattr(sys, 'frozen', False):
+     # Execute comme un executable
+    base_dir = os.path.dirname(sys.executable)
+else:
+        # Execute comme un script
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+# On definie le dossier principal base_dir
+dir_path = base_dir
+path_dossier = os.path.join(base_dir, "Points_de_Restauration")
+
+# S'assure que le dossier Point_de_restoration existe 
+os.makedirs(path_dossier, exist_ok=True)
+
+
+
+#dir_path = '.' #variable pour stocker le repertoire où la ligne suivante va chercher les fichier .json...Avant d'implementer pyinstaller on avait besoin de cette ligne
 json_files = [f for f in os.listdir(dir_path) if f.endswith('.json')] #la function os.listdir(dir_path) retourne les fichier et repertoires qui sont dans le repertoire (dir_path)...."f for f in..." est un boucle qui va itérer dans la liste doné par os.listdir(dir_path)....if f.endswith('.json') c'est un conditional qui filtre la liste avec les fichier qui se terminent par .json
 
 
@@ -152,7 +168,7 @@ def list_conf(): #Ici je define une function, car j'ai vais avoir besoin de la m
         with open(os.path.join(dir_path, file), 'r') as f:
             data = json.load(f)
             print("")               
-            for key, value in data.items(): #fait une boucle pour et passe par item de "data"
+            for key, value in data.items(): #fait une boucle pour lire chaque item de "data" et imprime la ley et la value.
                 print(f"{key}: {value}")
             print("")   
             print("----------------------")

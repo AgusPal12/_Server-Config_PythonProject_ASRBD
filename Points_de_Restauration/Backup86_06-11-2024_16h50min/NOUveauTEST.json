@@ -1,6 +1,6 @@
 {
     "Name": "Serveur45",
     "Ip": "192.168.0.1",
-    "Systeme": "feezf",
+    "Systeme": "Debian",
     "Services UP": "php, Mysql"
 }

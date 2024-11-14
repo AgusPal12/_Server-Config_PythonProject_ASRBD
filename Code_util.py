@@ -58,3 +58,4 @@ os.makedirs(path_dossier, exist_ok=True)
 
 
 Et aussi reemplacer le "." para la variable "dir_path" tans tout le code.
+
