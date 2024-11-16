@@ -168,7 +168,7 @@ def list_conf(): #Ici je define une function, car j'ai vais avoir besoin de la m
         with open(os.path.join(dir_path, file), 'r') as f:
             data = json.load(f)
             print("")               
-            for key, value in data.items(): #fait une boucle pour lire chaque item de "data" et imprime la ley et la value.
+            for key, value in data.items(): #fait une boucle pour lire chaque item de "data" et imprime la key et la value.
                 print(f"{key}: {value}")
             print("")   
             print("----------------------")
@@ -752,24 +752,96 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                 
             try:
                 
+                print(Fore.YELLOW + Style.BRIGHT + "SCANNING........" + Style.RESET_ALL)
+
                 nm.scan(hosts=ip_range, arguments='-sV -p 1-1024') # -sV : scan et identifie la version de chaque service. -p scan les ports dans l'IP range.
 
                 # Afficher les résultat 
                 print(Fore.YELLOW + Style.BRIGHT + "Analyse terminée...Résultats du scan:" + Style.RESET_ALL)
                 print("")
-                for host in nm.all_hosts(): #nm.all_hosts() nous retourne une liste avec tous les hosts (ip address) qui Nmap a scanné.
-                    print(f"Host: {host}") # Affiche chaque host et sa variable
+                for index, host in enumerate(nm.all_hosts(), start=1): #nm.all_hosts() nous retourne une liste avec tous les hosts (ip address) qui Nmap a scanné.
+                    print(f"{index}. Host: {host}") # Affiche chaque host et sa variable. Avec son Index
                     for proto in nm[host].all_protocols(): # Retourne une liste avec tous les protocoles détectés dans le host courent 
-                        print(f"  Protocol: {proto}") # Affiche chaque protocole et sa variable
+                        print(f"       Protocol: {proto}") # Affiche chaque protocole et sa variable
+                        
+                        ports_services = [] #on crée une liste pour stocker les services actives.
+
                         lport = nm[host][proto].keys() # Obtiens une liste avec tous les port ouverts dans le host courent et le protocol
                         for port in lport:
-                            print(f"    Port: {port} ({nm[host][proto][port]['state']})") # Affiche le numéro de port et son status
-                            print(f"    Service: {nm[host][proto][port]['name']}") # Affiche le nom du service up dans le port courent
-                            print(f"    Version: {nm[host][proto][port]['version']}") # Affiche la version du service up dans le port courent.
-            
+                            
+                            print(f"         Port: {port} ({nm[host][proto][port]['state']})") # Affiche le numéro de port et son status
+                            print(f"         Service: {nm[host][proto][port]['name']}") # Affiche le nom du service up dans le port courent
+                            print(f"         Version: {nm[host][proto][port]['version']}") # Affiche la version du service up dans le port courent.
+                            print("")
+                            
+                            
+                            
+                            ports_services_info = {"service": nm[host][proto][port]['name']} #On récupère que la partie de services.
+                            ports_services.append(ports_services_info) # On l'ajoute à la liste 
+                            
+
+
+ #Nouveau code en cour de ecriture pour donner a choisir si on veut enregistrer dans des fichier json les résultats du scan
+                while True:                           
+                        
+                    fichier_nmap = input(Fore.CYAN + "Pour sauvegarder un Host dans un fichier conf, entrez le numéro de host à sauvegarder ou 'r' pour revenir au menu : ")
+
+                    if fichier_nmap.lower() == 'r':
+                        break
+                    
+                                
+                    try:
+                        
+                        num_host = int(fichier_nmap)
+                        
+                        if 1 <= num_host <= len(nm.all_hosts()):    
+                            selected_host = nm.all_hosts()[num_host -1]
+                            print(f"Host {num_host} selected: {selected_host}")
+
+                            enregistre_scan = input("Voulez l'enregistrer? o/n: " + Style.RESET_ALL)
+                            
+                            if enregistre_scan == 'n':
+                                print(Fore.YELLOW + Style.BRIGHT + "Host pas enregistrée" + Style.RESET_ALL)
+                                break
+                            
+                            if enregistre_scan ==  'o':
+                                    
+                                nom_ser_nmap = input(Fore.CYAN + "Entrer le nom du Serveur: ")
+                                
+                                nom_fichier_conf_choisi_nmap = input("Entrer le nom du fichier (suggestion: nom du serveur): ")
+                                
+                                systeme_nmap = input("Entrez le système d'exploitation : " + Style.RESET_ALL)
+
+                                nom_fichier_conf_choisi_nmap = nom_fichier_conf_choisi_nmap + ".json"
+
+                                services_list = [list(d.values())[0] for d in ports_services] #on récupère juste le 'value' de chaque dictionnaire de la liste ports_services
+
+                                                                    
+                                server_config_nmap = {"Serveur": nom_ser_nmap, "Host": selected_host, "Services UP": services_list, "Systeme": systeme_nmap }
+                                                            
+                                with open(nom_fichier_conf_choisi_nmap, 'w') as f: #crée le fichier.json et le met en mode write.
+                                    json.dump(server_config_nmap, f, indent=4) #dump: écris ajoute l'information dans le fichier, indent donne le forma pour qu'il soit lisible en json
+                                
+                                
+                                print(Fore.GREEN + "Host enregistrée" + Style.RESET_ALL)   
+                                break
+
+
+                            else:
+                                print(Fore.RED + Style.BRIGHT + "Option non valide, réessayez" + Style.RESET_ALL)
+                                break
+
+
+                        else:
+                            print(Fore.RED + Style.BRIGHT + "Numéro de host invalide. Essayez encore." + Style.RESET_ALL)
+                    except ValueError:
+                        print(Fore.RED + Style.BRIGHT + "Entrée non valide. Entrez un numéro ou 'r' pour revenir au menu." + Style.RESET_ALL)
+                            
+
             except ValueError:
-                    print("Error...")
-                    break
+
+                print(Fore.RED + Style.BRIGHT + "Error..." + Style.RESET_ALL)
+                break
         
         
     

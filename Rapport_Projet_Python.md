@@ -18,7 +18,7 @@ Tout cela dans une interface accessible à tout utilisateur et exécutable de fa
 
  - Restaurer les configurations : Ici, on peut créer des points de sauvegarde des fichiers de configuration existants (un, plusieurs ou tous) et ajouter un commentaire. On peut aussi restaurer des configurations en sélectionnant le point de sauvegarde souhaité. De plus, on peut afficher les points de sauvegarde existants.
 
- - Et enfin, scanner les serveurs à l'aide de NMAP : On donne une IP ou une plage d'IPs et on obtient l'hôte avec les ports ouverts, protocole, services actifs et leur version.
+ - Et enfin, scanner les serveurs à l'aide de NMAP : On donne une IP ou une plage d'IPs et on obtient l'hôte avec les ports ouverts, protocole, services actifs et leur version. On peut choisir si on veut sauvegarder cette information dans un fichier .json
 
 ## Les différents choix techniques qui ont été implémentés sont :
 
