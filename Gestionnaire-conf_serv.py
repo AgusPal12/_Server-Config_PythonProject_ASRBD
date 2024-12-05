@@ -1,6 +1,5 @@
 import os
 import json
-import pprint
 import nmap
 import shutil
 import glob
@@ -46,7 +45,10 @@ Selection = """
 5. Sauvegarder les configurations 
 6. Restaurer les configurations   
 7. Scanner les serveurs (NMAP)    
---------------------------------- 
+---------------------------------
+Version: 1.0.0
+Developer: Palacios Agustin
+Copyright (c) 2024 Palacios Agustin. All rights reserved. 
 """
 fichier_conf = """
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -781,7 +783,7 @@ Configuration pre-enregistré...\nOPTION 5 --> 2 pour Sauvegarder!""" + Style.RE
                             
 
 
- #Nouveau code en cour de ecriture pour donner a choisir si on veut enregistrer dans des fichier json les résultats du scan
+ #Nouveau code en cour de écricoture pour donner a choisir si on veut enregistrer dans des fichier json les résultats du scan
                 while True:                           
                         
                     fichier_nmap = input(Fore.CYAN + "Pour sauvegarder un Host dans un fichier conf, entrez le numéro de host à sauvegarder ou 'r' pour revenir au menu : ")

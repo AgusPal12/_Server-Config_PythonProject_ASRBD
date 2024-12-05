@@ -1,7 +1,7 @@
 # Gestionnaire des configurations de serveurs : "Server Config"
 
 "Server Config" est un logiciel qui permet de manipuler des configurations de serveurs. Les configurations ont un format JSON, une par fichier, et contiennent un dictionnaire avec les clés : {Nom du serveur : , adresse IP : , système d'exploitation : , services en cours d'exécution :}.
-On peut les créer, modifier, visualiser, supprimer, sauvegarder, et les restaurer. En plus, Server Config permet de scanner une plage d'adresses IP à la recherche de services et de serveurs à l'aide de NMAP.
+On peut les créer, modifier, visualiser, supprimer, sauvegarder, et les restaurer. En plus, Server Config permet de scanner une plage d'adresses IP à la recherche de services et de serveurs à l'aide de NMAP et sauvegarder les information du serveur (Services actives, Ip, etc) dans un fichier JSON.
 Tout cela dans une interface accessible à tout utilisateur et exécutable de façon autonome pour Windows et Linux.
 
 ## Les fonctionnalités :
@@ -42,7 +42,7 @@ Tout cela dans une interface accessible à tout utilisateur et exécutable de fa
 
    - Le dossier principal pour stocker les fichiers .json est le dossier où le logiciel est exécuté.
 
-   - Le dossier pour stocker les points de restauration doit être créé manuellement ("Point_de_Restauration") avant de lancer le logiciel, sinon le logiciel le crée de façon automatique.
+   -  S'il n'existe déjà, le dossier pour stocker les points de restauration est crée de façon automatique ("Point_de_Restauration") avant de lancer le logiciel.
 
    - L'utilisateur est guidé à tout moment pour confirmer lorsque qu'une action importante va être réalisée ou un rappel s'affiche en cas de besoin :
 
@@ -55,11 +55,13 @@ Tout cela dans une interface accessible à tout utilisateur et exécutable de fa
 
    - Des messages d'erreur sont affichés lorsqu'il y a des erreurs de saisie de la part de l'utilisateur.
 
-   - Affichage adapté à la quantité de fichiers pour l'option 2. Si plus de 10, le contenu du fichier n'est pas affiché, seulement le nom.
+   - Affichage adapté à la quantité de fichiers pour l'option 2. Si plus de 10 fichiers, le contenu du .json n'est pas affiché, seulement le nom.
 
    - Lors de la création d'un nouveau point de sauvegarde, la date et l'heure sont ajoutées au nom du dossier de point de restauration avec la possibilité de laisser un commentaire .
 
-   - NMAP doit être installé au préalable dans le système pour que la bibliothèque nmap de Python fonctionne.
+   - NMAP doit être installé au préalable dans le système pour que la bibliothèque nmap de Python puise fonctionner.
+
+   - Voir "Schéma.pnp" pour voir le schéma des fonctionnement du logiciel. 
 
 ## Quelques soucis rencontrés :
 
@@ -97,3 +99,8 @@ Tout cela dans une interface accessible à tout utilisateur et exécutable de fa
  - Vérifier si le nom du nouveau fichier créé existe déjà, et soit donner un avertissement, soit ajouter un N° 2 à la fin et informer. Pour l'instant, cela écrase le fichier existant si même nom.
  - Vider les variables "nouveau fichier" et "modification du fichier" une fois utilisé. 
  - un nom de fichier ne peut pas être modifié, faut l’éliminer et le re-créer.
+
+
+ 
+ Auteur: Agustin Palacios
+ agustinjpalacios1@gmail.com

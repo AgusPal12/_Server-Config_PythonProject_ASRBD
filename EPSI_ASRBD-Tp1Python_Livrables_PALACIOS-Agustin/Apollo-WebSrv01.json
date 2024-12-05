@@ -1,8 +1,0 @@
-{
-    "Name": "Apollo-WebSrv01",
-    "Ip": "192.168.201.142",
-    "Systeme": "Ubuntu Server 22.04 LTS",
-    "Services UP": [
-        " NGINX, Node.js, and MongoDB"
-    ]
-}

@@ -1,8 +1,0 @@
-{
-    "Name": "Cronus-CI/CD",
-    "Ip": "192.168.201.142",
-    "Systeme": "Fedora Server 37",
-    "Services UP": [
-        "Jenkins, Docker"
-    ]
-}
